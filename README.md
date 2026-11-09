@@ -64,7 +64,7 @@ Open `http://localhost:8000` in your browser.
 
 ## License
 
-Released under the [MIT License](LICENSE).
+All rights reserved. © 2026 CHIEE444.
 
 ## Author
 
