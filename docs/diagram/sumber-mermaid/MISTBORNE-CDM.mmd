@@ -1,0 +1,133 @@
+erDiagram
+    PERJALANAN {
+        id id PK
+        teks nama
+        uang harga_per_booking
+        angka durasi_hari
+        angka kapasitas_maksimal
+        daftar itinerary
+    }
+    JADWAL_KEBERANGKATAN {
+        id id PK
+        tanggal tanggal
+        angka kuota
+        ya_tidak diblokir
+    }
+    HOTEL {
+        id id PK
+        teks nama
+        angka bintang
+        daftar tipe_kamar
+        uang tarif
+    }
+    KENDARAAN {
+        id id PK
+        teks nama
+        teks plat_nomor
+        angka kapasitas
+        status status
+    }
+    SERVIS_KENDARAAN {
+        id id PK
+        teks jenis_servis
+        tanggal tanggal_servis
+        uang biaya
+    }
+    PERSONEL_GUIDE {
+        id id PK
+        teks nama
+        teks data_sim
+        status status_ketersediaan
+    }
+    AKTIVITAS_PERSONEL {
+        id id PK
+        teks jenis_kegiatan
+        waktu waktu
+    }
+    USER {
+        id id PK
+        teks email
+        teks jabatan
+    }
+    PERMINTAAN_PESANAN {
+        id id PK
+        teks nama_tamu
+        tanggal tanggal_trip
+        angka jumlah_tamu
+        status status
+    }
+    PESANAN {
+        id id PK
+        teks kode_MST
+        tanggal tanggal_trip
+        uang harga
+        uang nominal_dibayar
+        status status
+    }
+    PENGGANTIAN_JADWAL {
+        id id PK
+        tanggal tanggal_lama
+        tanggal tanggal_baru
+        uang biaya
+    }
+    PESANAN_KUSTOM {
+        id id PK
+        teks destinasi
+        angka jumlah_orang
+        uang harga_per_orang
+        status status
+    }
+    RIWAYAT_PENAWARAN {
+        id id PK
+        angka versi
+        daftar isi_penawaran
+    }
+    ULASAN {
+        id id PK
+        angka rating
+        teks komentar
+        ya_tidak disetujui
+    }
+    PERTANYAAN_TAMU {
+        id id PK
+        teks sumber
+        teks pesan
+        status status
+    }
+    ARTIKEL {
+        id id PK
+        teks judul
+        teks kategori
+        waktu tanggal_terbit
+    }
+    PENGATURAN {
+        id id PK
+        angka batas_bayar_hari
+        angka kuota_default
+        teks nomor_whatsapp_admin
+    }
+    NOTIFIKASI {
+        id id PK
+        teks jenis
+        waktu dibaca
+    }
+    PERJALANAN ||--o{ JADWAL_KEBERANGKATAN : "memiliki"
+    PERJALANAN ||--o{ PESANAN : "dipesan dalam"
+    PERJALANAN |o--o{ PERMINTAAN_PESANAN : "diminta dalam"
+    PERJALANAN }o--o{ HOTEL : "bermitra dengan"
+    KENDARAAN |o--o{ PERJALANAN : "direkomendasikan untuk"
+    KENDARAAN |o--o{ PESANAN : "dipakai di"
+    KENDARAAN ||--o{ SERVIS_KENDARAAN : "punya"
+    HOTEL |o--o{ PESANAN : "menampung"
+    PERSONEL_GUIDE |o--o{ PESANAN : "ditugaskan di"
+    PERSONEL_GUIDE ||--o{ AKTIVITAS_PERSONEL : "mencatat"
+    PESANAN |o--o{ AKTIVITAS_PERSONEL : "terkait"
+    USER |o--o| PERSONEL_GUIDE : "menjadi akun"
+    PERMINTAAN_PESANAN |o--o| PESANAN : "menjadi"
+    PESANAN_KUSTOM |o--o| PESANAN : "menjadi"
+    PESANAN_KUSTOM ||--o{ RIWAYAT_PENAWARAN : "punya"
+    USER |o--o{ RIWAYAT_PENAWARAN : "mencatat"
+    PESANAN ||--o| ULASAN : "punya"
+    PESANAN ||--o{ PENGGANTIAN_JADWAL : "punya"
+    PERMINTAAN_PESANAN |o--o{ PERTANYAAN_TAMU : "berlanjut dari"
+    USER ||--o{ NOTIFIKASI : "menerima"

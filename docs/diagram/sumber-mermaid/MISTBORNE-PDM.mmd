@@ -1,0 +1,390 @@
+erDiagram
+    users {
+        bigint id PK
+        varchar(255) name "NOT NULL"
+        varchar(255) email UK "NOT NULL"
+        timestamp email_verified_at
+        varchar(255) password "NOT NULL"
+        varchar(100) remember_token
+        timestamp created_at
+        timestamp updated_at
+        varchar(255) jabatan
+        varchar(255) foto
+    }
+    perjalanan {
+        bigint id PK
+        varchar(255) nama UK "NOT NULL"
+        varchar(255) slug UK "NOT NULL"
+        varchar(255) region
+        varchar(255) chip
+        varchar(255) tempat
+        varchar(255) tagline
+        text deskripsi
+        bigint harga
+        smallint durasi_hari
+        smallint maks_orang "NOT NULL"
+        varchar(255) img
+        json highlights
+        json itinerary
+        json praktis
+        varchar(255) tone
+        varchar(255) rating_label
+        integer reviews_count
+        boolean tampil_beranda "NOT NULL"
+        integer urutan "NOT NULL"
+        timestamp created_at
+        timestamp updated_at
+        timestamp deleted_at
+        boolean template_pesanan_kustom "NOT NULL"
+        text rekomendasi_penginapan
+        varchar(10) jenis "NOT NULL"
+        varchar(120) label_unggulan
+        bigint kendaraan_id FK
+        text alasan_kendaraan
+    }
+    jadwal_keberangkatan {
+        bigint id PK
+        bigint perjalanan_id FK, UK "NOT NULL"
+        date tanggal UK "NOT NULL"
+        smallint kuota
+        boolean diblok "NOT NULL"
+        timestamp created_at
+        timestamp updated_at
+    }
+    hotel {
+        bigint id PK
+        varchar(255) nama "NOT NULL"
+        smallint bintang "NOT NULL"
+        varchar(100) area "NOT NULL"
+        text alamat
+        varchar(500) tautan_peta
+        varchar(20) whatsapp
+        varchar(255) email
+        varchar(100) nama_pic
+        integer tarif_mulai
+        integer tarif_sampai
+        smallint kapasitas_kamar "NOT NULL"
+        boolean tersedia_extra_bed "NOT NULL"
+        json fasilitas
+        time jam_check_in "NOT NULL"
+        time jam_check_out "NOT NULL"
+        text kebijakan_pembatalan
+        text catatan
+        boolean aktif "NOT NULL"
+        timestamp created_at
+        timestamp updated_at
+        timestamp deleted_at
+        varchar(500) foto
+        boolean sorotan "NOT NULL"
+        json tipe_kamar
+        text deskripsi
+        varchar(150) jarak_destinasi
+        json galeri
+        varchar(190) slug UK
+        varchar(255) google_place_id
+        numeric google_rating "presisi 2,1"
+        integer google_jumlah_ulasan
+        timestamp google_diperbarui
+    }
+    hotel_perjalanan {
+        bigint id PK
+        bigint hotel_id FK, UK "NOT NULL"
+        bigint perjalanan_id UK, FK "NOT NULL"
+    }
+    kendaraan {
+        bigint id PK
+        varchar(255) nama "NOT NULL"
+        varchar(20) jenis "NOT NULL"
+        varchar(15) plat_nomor "NOT NULL"
+        smallint kapasitas "NOT NULL"
+        smallint tahun
+        varchar(30) warna
+        varchar(20) status "NOT NULL"
+        varchar(255) foto
+        text catatan
+        timestamp created_at
+        timestamp updated_at
+        timestamp deleted_at
+        varchar(20) bahan_bakar
+        integer odometer
+        date stnk_berlaku_sampai
+        date pajak_berlaku_sampai
+    }
+    servis_kendaraan {
+        bigint id PK
+        bigint kendaraan_id FK "NOT NULL"
+        varchar(80) jenis "NOT NULL"
+        varchar(12) status "NOT NULL"
+        date jatuh_tempo_tanggal
+        integer jatuh_tempo_odometer
+        date tanggal_servis
+        integer odometer_servis
+        integer biaya
+        text catatan
+        timestamp created_at
+        timestamp updated_at
+    }
+    personel_operasional {
+        bigint id PK
+        varchar(255) nama "NOT NULL"
+        varchar(20) peran "NOT NULL"
+        varchar(30) whatsapp
+        varchar(255) email
+        varchar(255) wilayah_operasi
+        smallint pengalaman_tahun
+        text keahlian
+        varchar(40) nomor_sim
+        varchar(20) status_operasional "NOT NULL"
+        varchar(255) foto_profil
+        text catatan
+        boolean aktif "NOT NULL"
+        timestamp created_at
+        timestamp updated_at
+        bigint user_id FK, UK
+        varchar(5) jenis_sim
+        date masa_berlaku_sim
+        smallint pengalaman_mengemudi_tahun
+        varchar(255) kendaraan_dikuasai
+    }
+    aktivitas_personel {
+        bigint id PK
+        bigint personel_id FK "NOT NULL"
+        bigint pesanan_id FK
+        varchar(30) jenis "NOT NULL"
+        varchar(255) keterangan "NOT NULL"
+        timestamp created_at "NOT NULL"
+    }
+    permintaan_pesanan {
+        bigint id PK
+        varchar(80) token UK "NOT NULL"
+        varchar(30) whatsapp "NOT NULL"
+        varchar(30) status "NOT NULL"
+        bigint perjalanan_id FK
+        varchar(255) nama_lengkap
+        date tanggal_trip
+        smallint jumlah_wisatawan
+        varchar(255) nama_hotel
+        varchar(255) lokasi_pickup
+        time waktu_pickup
+        varchar(255) paket_opsional
+        text permintaan_khusus
+        text catatan_admin
+        timestamp token_berlaku_sampai "NOT NULL"
+        bigint pesanan_id FK, UK
+        timestamp created_at
+        timestamp updated_at
+        varchar(20) sumber "NOT NULL"
+        uuid token_booking UK
+        bigint user_web_id FK
+        text alasan_tidak_jadi
+        varchar(10) status_penginapan
+        varchar(500) alamat_hotel
+        varchar(150) kendaraan_pilihan
+    }
+    pesanan {
+        bigint id PK
+        varchar(255) kode UK "NOT NULL"
+        bigint perjalanan_id FK "NOT NULL"
+        varchar(255) nama_perjalanan "NOT NULL"
+        date tanggal_trip "NOT NULL"
+        date tanggal_selesai
+        varchar(255) nama_lengkap "NOT NULL"
+        varchar(255) whatsapp "NOT NULL"
+        varchar(255) paket_opsional
+        varchar(255) nama_hotel
+        varchar(255) lokasi_pickup "NOT NULL"
+        smallint jumlah_wisatawan "NOT NULL"
+        text permintaan_khusus
+        bigint harga
+        varchar(255) status "NOT NULL"
+        varchar(255) sumber "NOT NULL"
+        timestamp dikonfirmasi_at
+        varchar(255) status_sebelum_hold
+        varchar(255) status_sebelum_batal
+        date tanggal_lama
+        bigint charge_ganti_jadwal "NOT NULL"
+        varchar(255) pihak_pembatal
+        text alasan_batal
+        bigint nominal_refund "NOT NULL"
+        varchar(255) nama_guide
+        varchar(255) bukti_pembayaran
+        text catatan_admin
+        varchar(255) token_rating UK "NOT NULL"
+        boolean pengingat_h7_terkirim "NOT NULL"
+        boolean pengingat_h2_terkirim "NOT NULL"
+        timestamp created_at
+        timestamp updated_at
+        bigint user_web_id
+        time waktu_pickup
+        bigint nominal_dibayar
+        varchar(30) metode_pembayaran
+        bigint guide_personel_id FK
+        varchar(20) status_konfirmasi_guide
+        timestamp guide_dikonfirmasi_at
+        timestamp guide_trip_selesai_at
+        timestamp pembayaran_diterima_at
+        boolean pengingat_h3_terkirim "NOT NULL"
+        uuid token_booking UK
+        smallint durasi_hari
+        bigint kendaraan_id FK
+        varchar(10) status_penginapan
+        bigint hotel_id FK
+        date hotel_check_in
+        date hotel_check_out
+        smallint jumlah_kamar
+        varchar(100) tipe_kamar
+        varchar(100) kode_booking_hotel
+        varchar(15) status_reservasi_hotel
+        text catatan_reservasi_hotel
+        varchar(500) alamat_hotel
+        varchar(150) kendaraan_pilihan
+        timestamp permintaan_hotel_dikirim_at
+        bigint bayar_hotel_nominal
+        date bayar_hotel_tanggal
+        varchar(255) bayar_hotel_bukti
+        timestamp bukti_bayar_hotel_dikirim_at
+        timestamp bayar_hotel_dikonfirmasi_at
+        timestamp tamu_dikabari_hotel_at
+        timestamp konfirmasi_ulang_hotel_at
+        varchar(20) email_penugasan_status
+        varchar(255) email_penugasan_alamat
+        timestamp email_penugasan_at
+        varchar(500) email_penugasan_galat
+    }
+    penggantian_jadwal {
+        bigint id PK
+        bigint pesanan_id FK "NOT NULL"
+        date tanggal_lama "NOT NULL"
+        date tanggal_baru "NOT NULL"
+        bigint charge "NOT NULL"
+        timestamp created_at
+        timestamp updated_at
+    }
+    pesanan_kustom {
+        bigint id PK
+        varchar(255) nama "NOT NULL"
+        varchar(255) whatsapp "NOT NULL"
+        varchar(255) destinasi_diinginkan "NOT NULL"
+        varchar(255) jadwal_diinginkan "NOT NULL"
+        smallint jumlah_orang "NOT NULL"
+        text catatan
+        bigint harga_final
+        varchar(255) nama_pendamping
+        varchar(255) status "NOT NULL"
+        timestamp created_at
+        timestamp updated_at
+        timestamp deleted_at
+        date tanggal_diinginkan
+        boolean tanggal_fleksibel "NOT NULL"
+        smallint durasi_hari
+        varchar(255) lokasi_penjemputan
+        text rencana_perjalanan
+        text rincian_penawaran
+        date batas_penawaran
+        text catatan_admin
+        bigint pesanan_id FK, UK
+        json minat_perjalanan
+        varchar(255) tempo_perjalanan
+        timestamp penawaran_dikirim_pada
+        text alasan_tidak_jadi
+        varchar(10) status_penginapan
+        varchar(255) nama_hotel
+    }
+    riwayat_penawaran_pesanan_kustom {
+        bigint id PK
+        bigint pesanan_kustom_id FK, UK "NOT NULL"
+        bigint user_id FK
+        smallint versi UK "NOT NULL"
+        json snapshot "NOT NULL"
+        timestamp terkirim_pada "NOT NULL"
+        timestamp created_at
+        timestamp updated_at
+    }
+    ulasan {
+        bigint id PK
+        bigint pesanan_id FK, UK "NOT NULL"
+        smallint rating "NOT NULL"
+        text komentar "NOT NULL"
+        varchar(255) video_path
+        boolean izin_tampil "NOT NULL"
+        boolean disetujui "NOT NULL"
+        timestamp created_at
+        timestamp updated_at
+        timestamp deleted_at
+    }
+    pertanyaan_tamu {
+        bigint id PK
+        varchar(30) sumber "NOT NULL"
+        varchar(20) status "NOT NULL"
+        varchar(255) nama
+        varchar(30) whatsapp
+        varchar(255) journey
+        varchar(255) lokasi_pickup
+        date tanggal_perjalanan
+        varchar(60) durasi
+        varchar(60) jenis_perjalanan
+        text pesan "NOT NULL"
+        text catatan_admin
+        varchar(64) sidik_pengirim
+        bigint permintaan_pesanan_id FK
+        timestamp created_at
+        timestamp updated_at
+    }
+    artikel {
+        bigint id PK
+        varchar(255) judul "NOT NULL"
+        varchar(255) slug UK "NOT NULL"
+        varchar(255) kategori "NOT NULL"
+        varchar(255) penulis "NOT NULL"
+        smallint waktu_baca_menit "NOT NULL"
+        text ringkasan "NOT NULL"
+        text isi "NOT NULL"
+        varchar(255) img
+        timestamp published_at
+        timestamp created_at
+        timestamp updated_at
+        timestamp deleted_at
+    }
+    pengaturan {
+        bigint id PK
+        smallint batas_bayar_hari "NOT NULL"
+        smallint persen_charge_ganti_jadwal "NOT NULL"
+        smallint kuota_default "NOT NULL"
+        smallint batas_ulasan_hari "NOT NULL"
+        smallint batas_video_mb "NOT NULL"
+        varchar(255) nomor_whatsapp_admin "NOT NULL"
+        timestamp created_at
+        timestamp updated_at
+        text rekomendasi_penginapan
+    }
+    notifications {
+        uuid id PK
+        varchar(255) type "NOT NULL"
+        varchar(255) notifiable_type "NOT NULL"
+        bigint notifiable_id "NOT NULL"
+        text data "NOT NULL"
+        timestamp read_at
+        timestamp created_at
+        timestamp updated_at
+    }
+    kendaraan |o--o{ perjalanan : "kendaraan_id"
+    perjalanan ||--o{ jadwal_keberangkatan : "perjalanan_id"
+    hotel ||--o{ hotel_perjalanan : "hotel_id"
+    perjalanan ||--o{ hotel_perjalanan : "perjalanan_id"
+    kendaraan ||--o{ servis_kendaraan : "kendaraan_id"
+    users |o--o| personel_operasional : "user_id"
+    personel_operasional ||--o{ aktivitas_personel : "personel_id"
+    pesanan |o--o{ aktivitas_personel : "pesanan_id"
+    perjalanan |o--o{ permintaan_pesanan : "perjalanan_id"
+    pesanan |o--o| permintaan_pesanan : "pesanan_id"
+    users |o--o{ permintaan_pesanan : "user_web_id"
+    perjalanan ||--o{ pesanan : "perjalanan_id"
+    personel_operasional |o--o{ pesanan : "guide_personel_id"
+    kendaraan |o--o{ pesanan : "kendaraan_id"
+    hotel |o--o{ pesanan : "hotel_id"
+    pesanan ||--o{ penggantian_jadwal : "pesanan_id"
+    pesanan |o--o| pesanan_kustom : "pesanan_id"
+    pesanan_kustom ||--o{ riwayat_penawaran_pesanan_kustom : "pesanan_kustom_id"
+    users |o--o{ riwayat_penawaran_pesanan_kustom : "user_id"
+    pesanan ||--o| ulasan : "pesanan_id"
+    permintaan_pesanan |o--o{ pertanyaan_tamu : "permintaan_pesanan_id"

@@ -1,0 +1,46 @@
+---
+config:
+  layout: elk
+---
+flowchart TB
+    tamu[Tamu]
+    admin[Admin]
+    guide[Guide]
+    smtp[Gmail SMTP]
+    p1([1.0 Kelola katalog])
+    p2([2.0 Terima permintaan])
+    p3([3.0 Proses pesanan dan pembayaran])
+    p4([4.0 Kelola operasional])
+    p5([5.0 Selesaikan pesanan dan ulasan])
+    p6([6.0 Pantau dan laporan])
+    d1[(D1 perjalanan, jadwal_keberangkatan)]
+    d2[(D2 hotel, kendaraan)]
+    d7[(D7 artikel, pengaturan)]
+    d3[(D3 permintaan_pesanan, pesanan_kustom, pertanyaan_tamu)]
+    d8[(D8 notifications)]
+    d4[(D4 pesanan, penggantian_jadwal)]
+    d5[(D5 personel_operasional, aktivitas_personel)]
+    d6[(D6 ulasan)]
+    admin -- "data katalog" --> p1
+    p1 --> d1 & d2 & d7
+    tamu -- "booking, trip kustom, pertanyaan" --> p2
+    d1 -- "katalog dan kuota" --> p2
+    p2 --> d3
+    p2 -- "notifikasi" --> d8
+    d3 --> p3
+    admin -- "deal, konfirmasi, pembayaran, ganti jadwal, batal" --> p3
+    p3 --> d4
+    admin -- "guide, kendaraan, hotel" --> p4
+    guide -- "terima atau tolak tugas" --> p4
+    d2 --> p4
+    p4 --> d4 & d5
+    p4 -- "email penugasan" --> smtp
+    guide -- "trip selesai" --> p5
+    tamu -- "rating dan ulasan" --> p5
+    admin -- "Completed, setujui ulasan" --> p5
+    d4 --> p5
+    p5 -- "status Completed" --> d4
+    p5 --> d6
+    d6 -- "testimoni" --> tamu
+    d4 & d8 --> p6
+    p6 -- "dashboard, kalender, manifest, pengingat" --> admin

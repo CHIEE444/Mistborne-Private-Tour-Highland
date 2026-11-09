@@ -1,0 +1,74 @@
+@import 'tailwindcss';
+
+@plugin '@tailwindcss/forms';
+
+@source '../../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
+@source '../../../storage/framework/views/*.php';
+@source not '../../../tests';
+@source not '../../../docs';
+
+@import '../theme.css';
+/* Font ikon dimuat lewat CSS (bukan JS) agar nama ikon tidak sempat tampil sebagai teks. */
+@import '../ikon.css';
+
+@import './komponen.css';
+
+/*
+ * Token desain admin (warna, radius) untuk Tailwind; nilai hex harus sama dengan config/desain.php.
+ * Warna umum situs ada di resources/css/theme.css dan dipakai ulang di sini.
+ */
+
+@theme {
+    /* Warna merek yang dipakai ulang dari config/desain.php (bukan di theme.css publik) */
+    --color-emas: #C8A24A;
+    /* Admin memakai aksen sage (referensi dashboard); situs publik tetap memakai hijauAksi dari config/desain.php */
+    --color-hijau-aksi: #4E7059;
+    --color-hijau-aksi-tua: #3E5C4A;
+
+    /* Latar & garis khusus admin */
+    --color-admin-sidebar: #3F5C4A;
+    --color-admin-sidebar-active: #324B3C;
+    --color-admin-sidebar-teks: #6B726D;
+    --color-sage: #6B8F77;
+    --color-sage-tua: #4E7059;
+    --color-sage-muda: #E5EDE7;
+    --color-rail-hover: #EEF3EF;
+    --color-admin-content: #ECEBE5;
+
+    /* Lencana status pesanan (latar lembut + teks) */
+    --color-status-dihubungi-bg: #E7F0FB;
+    --color-status-dihubungi-teks: #2563AA;
+    --color-status-payment-bg: #FDF2DA;
+    --color-status-payment-teks: #A9790A;
+    --color-status-hold-schedule-bg: #F1E9FB;
+    --color-status-hold-schedule-teks: #6B3FA0;
+    --color-status-completed-bg: #E3F3E6;
+    --color-status-completed-teks: #1F7A3C;
+    --color-status-dibatalkan-bg: #FBE7E8;
+    --color-status-dibatalkan-teks: #C0314A;
+
+    /* Radius & bayangan konsisten dengan config/desain.php */
+    --radius-admin-kartu: 20px;
+    --shadow-admin-kartu: 0 1px 2px rgba(20, 25, 22, 0.04), 0 10px 28px -14px rgba(20, 25, 22, 0.14);
+
+    /* Halaman Masuk (login) admin — kartu mengambang & panel foto, lihat config/desain.php ukuran.radiusKartuMasuk/radiusPanelFoto */
+    --radius-kartu-masuk: 20px;
+    --radius-panel-foto: 22px;
+    --color-putih-masuk: #FCFCFC;
+    --color-border-masuk: #F2F1F6;
+}
+
+@layer base {
+    /* Kolom grid bawaan boleh menyusut: tanpa ini isi lebar (input tanggal, tabel) melebarkan satu halaman di layar sempit */
+    .grid {
+        grid-template-columns: minmax(0, 1fr);
+    }
+}
+
+/* Lambaian tangan pada banner sambutan dashboard */
+@keyframes wave {
+    0%, 60%, 100% { transform: rotate(0deg); }
+    10%, 30% { transform: rotate(14deg); }
+    20%, 40% { transform: rotate(-8deg); }
+    50% { transform: rotate(10deg); }
+}

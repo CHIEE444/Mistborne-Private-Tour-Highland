@@ -1,0 +1,31 @@
+/* Token desain situs: font (satu keluarga Montserrat + fallback CJK) dan utility bayangan tier */
+@theme {
+    /* Warna token tema (terang — satu-satunya tema setelah dark mode dihapus).
+       Jangan hardcode warna baru per komponen: pakai token ini (aturan teknis #9d). */
+    --color-page: #F7F8F4;
+    --color-ink: #14231B;
+    --color-muted: #486553;
+    --color-surface: #FFFFFF;
+    --color-surface-border: #DFE3D8;
+    /*
+     * Satu keluarga font (Montserrat) ditulis langsung tanpa var() agar tidak jatuh ke font sistem saat chunk font belum termuat.
+     */
+    --font-sans: 'Montserrat', 'Noto Sans Arabic', 'Geeza Pro', 'Segoe UI', Tahoma, 'Hiragino Sans', 'PingFang SC', 'Noto Sans CJK SC', 'Noto Sans JP', 'Noto Sans KR', 'Apple SD Gothic Neo', 'Malgun Gothic', 'Microsoft YaHei', ui-sans-serif, system-ui, sans-serif;
+    /* Sama dengan --font-sans; fallback sistem untuk aksara CJK dan Arab yang tidak ada di Montserrat. */
+    --font-serif: 'Montserrat', 'Noto Sans Arabic', 'Geeza Pro', 'Segoe UI', Tahoma, 'Hiragino Sans', 'PingFang SC', 'Noto Sans CJK SC', 'Noto Sans JP', 'Noto Sans KR', 'Apple SD Gothic Neo', 'Malgun Gothic', 'Microsoft YaHei', ui-sans-serif, system-ui, sans-serif;
+}
+
+:root {
+    --warna-brand: #1D7A56;
+    --warna-brand-tua: #12301F;
+}
+
+/* ===== [A6] Bayangan tier dari code.html (<style> Stitch dihapus) — sebagai @utility Tailwind v4;
+   dipakai .gallery-item ===== */
+@utility tier-1-shadow {
+    box-shadow: 0 12px 32px rgba(20, 35, 27, 0.08);
+}
+@utility tier-2-shadow {
+    box-shadow: 0 20px 48px rgba(20, 35, 27, 0.14);
+}
+

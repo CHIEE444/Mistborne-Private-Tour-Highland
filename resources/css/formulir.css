@@ -1,0 +1,530 @@
+/* ===== Kulit seragam untuk formulir publik (.fpub): booking, form permintaan, rancang trip kustom =====
+   Isian membulat lembut berlatar krem, label tegas, fokus hijau tua, tombol kirim pil hijau tua.
+   Memakai !important pada properti yang juga diisi inline style/utility agar tampil sama di semua form. */
+.fpub {
+    border-radius: 28px !important;
+    border: 1px solid #E3E7DF !important;
+    box-shadow: 0 24px 56px -34px rgba(18, 48, 31, .38) !important;
+    background: #fff;
+}
+.fpub label,
+.fpub legend {
+    color: #1F3A2B;
+}
+.fpub label:not(.sr-only) {
+    font-weight: 600;
+}
+.fpub input:not([type='checkbox']):not([type='radio']):not([type='hidden']):not([type='submit']),
+.fpub select,
+.fpub textarea {
+    width: 100%;
+    min-height: 50px;
+    padding: 0 16px;
+    background-color: #F7F8F4 !important;
+    border: 1px solid #E1E6DE !important;
+    border-radius: 14px !important;
+    font-size: 15px;
+    color: #14231B;
+    box-shadow: none;
+    transition: border-color .15s, box-shadow .15s, background-color .15s;
+}
+.fpub textarea {
+    padding: 14px 16px;
+    border-radius: 16px !important;
+}
+.fpub input::placeholder,
+.fpub textarea::placeholder {
+    color: #A3ADA5;
+}
+.fpub input:not([type='checkbox']):not([type='radio']):hover,
+.fpub select:hover,
+.fpub textarea:hover {
+    border-color: #CBD4C8 !important;
+}
+.fpub input:not([type='checkbox']):not([type='radio']):focus,
+.fpub select:focus,
+.fpub textarea:focus {
+    background-color: #fff !important;
+    border-color: #12301F !important;
+    box-shadow: 0 0 0 3px rgba(18, 48, 31, .10) !important;
+    outline: none;
+}
+.fpub input:disabled {
+    opacity: .6;
+    cursor: not-allowed;
+}
+.fpub input[type='checkbox'],
+.fpub input[type='radio'] {
+    -webkit-appearance: none;
+    appearance: none;
+    flex: none;
+    width: 20px;
+    height: 20px;
+    margin: 0;
+    padding: 0;
+    border: 1.5px solid #9AA89F;
+    background-color: #fff;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 100% 100%;
+    cursor: pointer;
+    transition: background-color .15s, border-color .15s, box-shadow .15s;
+}
+.fpub input[type='checkbox'] { border-radius: 6px; }
+.fpub input[type='radio'] { border-radius: 999px; }
+.fpub input[type='checkbox']:checked {
+    border-color: #1D7A56;
+    background-color: #1D7A56;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 16 16' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M4 8.5l2.6 2.6L12 5.5' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+}
+.fpub input[type='radio']:checked {
+    border-color: #1D7A56;
+    background-color: #1D7A56;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 16 16' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='8' cy='8' r='3' fill='white'/%3E%3C/svg%3E");
+}
+.fpub input[type='checkbox']:hover,
+.fpub input[type='radio']:hover { border-color: #1D7A56; }
+.fpub input[type='checkbox']:focus-visible,
+.fpub input[type='radio']:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(29, 122, 86, .25);
+}
+.fpub details {
+    border-radius: 16px !important;
+    border-color: #E1E6DE !important;
+    background: #F7F8F4;
+}
+.fpub button[type='submit'] {
+    min-height: 54px;
+    border-radius: 999px !important;
+    background-color: #12301F !important;
+    color: #fff !important;
+    font-weight: 600;
+    letter-spacing: 0;
+    text-transform: none;
+    transition: background-color .2s;
+}
+.fpub button[type='submit']:hover {
+    background-color: #1D7A56 !important;
+}
+
+/* ===== Formulir premium (.fp): booking dan rancang trip kustom — sampul foto, kartu formulir, chip, dan ringkasan ===== */
+
+.fp-sampul {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    background: #0B1F14;
+    color: #fff;
+}
+.fp-sampul__img {
+    position: absolute;
+    inset: 0;
+    z-index: -2;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transform: scale(1.04);
+    animation: fp-sampul-masuk 1.6s cubic-bezier(.22, 1, .36, 1) both;
+}
+.fp-sampul::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    background: linear-gradient(180deg, rgba(8, 19, 13, .62) 0%, rgba(8, 19, 13, .34) 38%, rgba(8, 19, 13, .58) 72%, #FFFFFF 100%);
+}
+@keyframes fp-sampul-masuk {
+    from { opacity: 0; transform: scale(1.1); }
+    to { opacity: 1; transform: scale(1.04); }
+}
+.fp-kaca {
+    background: rgba(255, 255, 255, .14);
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .24);
+    -webkit-backdrop-filter: blur(14px);
+    backdrop-filter: blur(14px);
+}
+
+.fp-kartu {
+    position: relative;
+    border-radius: 32px;
+    background: #fff;
+    box-shadow: 0 50px 100px -60px rgba(11, 31, 20, .6), 0 0 0 1px rgba(18, 48, 31, .06);
+}
+.fp-bagian {
+    padding: 28px 20px;
+}
+.fp-bagian + .fp-bagian {
+    border-top: 1px solid #EDF0EA;
+}
+@media (min-width: 640px) {
+    .fp-bagian { padding: 34px 36px; }
+}
+.fp-bagian__kepala {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    margin-bottom: 20px;
+}
+.fp-nomor {
+    display: grid;
+    flex: none;
+    place-items: center;
+    width: 34px;
+    height: 34px;
+    border-radius: 999px;
+    background: #EBEFE9;
+    color: #12301F;
+    font-size: 14px;
+    font-weight: 600;
+    font-variant-numeric: tabular-nums;
+    transition: background-color .25s, color .25s;
+}
+.fp-nomor.is-selesai {
+    background: #1D7A56;
+    color: #fff;
+}
+.fp-judul {
+    margin: 4px 0 0;
+    font-size: 20px;
+    font-weight: 600;
+    line-height: 1.25;
+    letter-spacing: -.01em;
+    color: #12301F;
+}
+.fp-sub {
+    margin-top: 4px;
+    font-size: 14px;
+    line-height: 1.55;
+    color: #6B776F;
+}
+
+/* Kolom isian berupa kartu: ikon datar di kiri, label kecil kalimat biasa, isian besar */
+.fp-f {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    min-height: 74px;
+    padding: 12px 16px 12px 12px;
+    border-radius: 18px;
+    background: #F7F8F4;
+    box-shadow: inset 0 0 0 1px #E3E8E1;
+    transition: box-shadow .18s, background-color .18s;
+}
+.fp-f:hover { box-shadow: inset 0 0 0 1px #C9D5CA; }
+.fp-f:focus-within {
+    background: #fff;
+    box-shadow: inset 0 0 0 2px #1D7A56, 0 16px 32px -24px rgba(29, 122, 86, .65);
+}
+.fp-f.is-invalid {
+    background: #FFF8F5;
+    box-shadow: inset 0 0 0 1.5px #E7A58A;
+}
+.fp-f.is-mati { opacity: .55; }
+.fp-f--area { align-items: flex-start; padding-top: 14px; }
+.fp-f__ikon {
+    display: grid;
+    flex: none;
+    place-items: center;
+    width: 44px;
+    height: 44px;
+    border-radius: 14px;
+    background: #fff;
+    color: #1D7A56;
+    box-shadow: 0 0 0 1px #E3E8E1;
+    transition: background-color .2s, color .2s, box-shadow .2s;
+}
+.fp-f:focus-within .fp-f__ikon {
+    background: #12301F;
+    color: #fff;
+    box-shadow: none;
+}
+.fp-f.is-invalid .fp-f__ikon { color: #C2410C; }
+.fp-f__isi { flex: 1; min-width: 0; }
+.fp-f__label {
+    display: block;
+    font-size: 13px;
+    font-weight: 500;
+    color: #5B6A61;
+}
+.fp-opsional { font-weight: 400; color: #98A39B; }
+.fp-f input:not([type='checkbox']):not([type='radio']),
+.fp-f textarea,
+.fp-f select {
+    display: block;
+    width: 100%;
+    margin-top: 2px;
+    padding: 0;
+    border: 0;
+    border-radius: 0;
+    background: transparent;
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 1.5;
+    color: #12231A;
+    box-shadow: none;
+}
+.fp-f input:focus,
+.fp-f textarea:focus,
+.fp-f select:focus {
+    outline: none;
+    box-shadow: none;
+    --tw-ring-shadow: 0 0 #0000;
+}
+.fp-f input::placeholder,
+.fp-f textarea::placeholder { color: #A9B2AB; font-weight: 400; }
+.fp-f textarea { resize: none; line-height: 1.6; }
+.fp-f select { cursor: pointer; padding-inline-end: 28px; background-position: right 0 center; }
+
+/* Tanggal/jam: teks terformat di atas pemilih asli yang transparan */
+.fp-tampil {
+    display: block;
+    margin-top: 2px;
+    overflow: hidden;
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 1.5;
+    color: #12231A;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+.fp-tampil.is-kosong { font-weight: 400; color: #A9B2AB; }
+.fp-pemilih {
+    position: absolute !important;
+    inset: 0;
+    z-index: 2;
+    width: 100% !important;
+    height: 100% !important;
+    margin: 0 !important;
+    opacity: 0;
+    cursor: pointer;
+    -webkit-appearance: none;
+    appearance: none;
+}
+.fp-pemilih::-webkit-calendar-picker-indicator {
+    position: absolute;
+    inset: 0;
+    width: auto;
+    height: auto;
+    cursor: pointer;
+}
+.fp-pemilih:disabled { cursor: not-allowed; }
+
+.fp-ok {
+    display: grid;
+    flex: none;
+    place-items: center;
+    width: 24px;
+    height: 24px;
+    border-radius: 999px;
+    background: #1D7A56;
+    color: #fff;
+}
+.fp-ok svg { width: 14px; height: 14px; fill: none; stroke: currentColor; stroke-width: 2.6; stroke-linecap: round; stroke-linejoin: round; }
+.fp-galat { margin: 7px 6px 0; font-size: 13px; line-height: 1.45; color: #B4401A; }
+.fp-bantu { margin: 7px 6px 0; font-size: 13px; line-height: 1.5; color: #7A857E; }
+
+/* Stepper jumlah tamu */
+.fp-pax {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 16px 16px 16px 20px;
+    border-radius: 22px;
+    background: #12301F;
+    color: #fff;
+}
+.fp-pax__orang { display: flex; flex-wrap: wrap; gap: 3px; margin-top: 8px; }
+.fp-pax__orang svg { width: 18px; height: 18px; transition: opacity .2s, transform .2s; }
+.fp-pax__kontrol { display: flex; align-items: center; gap: 14px; }
+.fp-pax__angka { min-width: 2ch; font-size: 34px; font-weight: 600; line-height: 1; text-align: center; font-variant-numeric: tabular-nums; }
+.fp-pax__tombol {
+    display: grid;
+    place-items: center;
+    width: 46px;
+    height: 46px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, .12);
+    color: #fff;
+    font-size: 22px;
+    line-height: 1;
+    transition: background-color .15s, opacity .15s, transform .15s;
+}
+.fp-pax__tombol:hover:not(:disabled) { background: rgba(255, 255, 255, .22); }
+.fp-pax__tombol:active:not(:disabled) { transform: scale(.94); }
+.fp-pax__tombol:disabled { opacity: .3; cursor: not-allowed; }
+.fp-pax__tombol:focus-visible { outline: 2px solid #fff; outline-offset: 2px; }
+
+/* Linimasa berangkat → selesai */
+.fp-linimasa {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+    align-items: center;
+    gap: 12px;
+    margin-top: 12px;
+    padding: 16px 18px;
+    border-radius: 18px;
+    background: #EEF4EF;
+    color: #12301F;
+}
+.fp-linimasa__label { display: block; font-size: 12.5px; color: #5B6A61; }
+.fp-linimasa__tanggal { display: block; margin-top: 2px; font-size: 14.5px; font-weight: 600; line-height: 1.35; }
+.fp-linimasa__garis {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    font-size: 12px;
+    font-weight: 600;
+    color: #1D7A56;
+    white-space: nowrap;
+}
+.fp-linimasa__garis::before {
+    content: '';
+    width: 64px;
+    height: 2px;
+    border-radius: 2px;
+    background: repeating-linear-gradient(90deg, #1D7A56 0 6px, transparent 6px 11px);
+}
+
+/* Pilihan Tanggal Tersedia di formulir booking: kartu kecil per tanggal (hari, tanggal, sisa slot).
+   Terpilih = hijau tua; penuh/ditutup = pudar dan tidak bisa dipilih. */
+.fp-tanggal { border: 0; margin: 0; padding: 0; min-width: 0; }
+.fp-tanggal__bulan { margin: 14px 0 8px; font-size: 12px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: #6C7670; }
+.fp-tanggal__bulan:first-of-type { margin-top: 2px; }
+.fp-tanggal__daftar { display: grid; grid-template-columns: repeat(auto-fill, minmax(104px, 1fr)); gap: 8px; }
+.fp-tanggal__opsi { position: relative; display: block; cursor: pointer; }
+.fp-tanggal__opsi input { position: absolute; width: 1px; height: 1px; opacity: 0; pointer-events: none; }
+.fp-tanggal__opsi > span {
+    display: flex; flex-direction: column; gap: 2px;
+    padding: 10px 12px; border-radius: 14px;
+    background: #F1F4EF; color: #2F4A3A;
+    box-shadow: inset 0 0 0 1px transparent;
+    transition: background-color .18s, color .18s, box-shadow .18s;
+}
+.fp-tanggal__opsi:hover > span { background: #E6ECE5; }
+.fp-tanggal__hari { font-size: 12px; font-weight: 500; opacity: .8; }
+.fp-tanggal__angka { font-size: 15.5px; font-weight: 700; }
+.fp-tanggal__sisa { font-size: 11.5px; font-weight: 600; color: #1D7A56; }
+.fp-tanggal__opsi input:checked + span { background: #12301F; color: #fff; }
+.fp-tanggal__opsi input:checked + span .fp-tanggal__sisa { color: #B9E4CC; }
+.fp-tanggal__opsi input:focus-visible + span { outline: 2px solid #1D7A56; outline-offset: 2px; }
+.fp-tanggal__opsi input:disabled + span { cursor: not-allowed; background: #F6F7F5; color: #A3ACA6; }
+.fp-tanggal__opsi input:disabled + span .fp-tanggal__sisa { color: #B3412E; }
+.fp-tanggal.is-invalid .fp-tanggal__opsi > span { box-shadow: inset 0 0 0 1px rgba(179, 65, 46, .35); }
+.fp-tanggal-kosong { padding: 16px 18px; border-radius: 16px; background: #FBF6EC; color: #5B5240; font-size: 14px; line-height: 1.55; }
+.fp-tanggal-kosong__tombol {
+    display: inline-flex; align-items: center; padding: 10px 16px; border-radius: 999px;
+    background: #12301F; color: #fff; font-size: 13.5px; font-weight: 600; transition: background-color .18s;
+}
+.fp-tanggal-kosong__tombol:hover { background: #1D7A56; }
+.fp-tanggal-kosong__tombol.is-sekunder { background: #fff; color: #12301F; box-shadow: inset 0 0 0 1px rgba(18, 48, 31, .2); }
+
+/* Chip pilihan (minat perjalanan): terpilih = isi hijau tua, tanpa garis tepi */
+.fp-chip { position: relative; display: inline-flex; cursor: pointer; }
+.fp-chip input { position: absolute; width: 1px; height: 1px; opacity: 0; pointer-events: none; }
+.fp-chip span {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 11px 18px;
+    border-radius: 999px;
+    background: #F1F4EF;
+    color: #2F4A3A;
+    font-size: 14.5px;
+    font-weight: 500;
+    transition: background-color .18s, color .18s, transform .18s;
+}
+.fp-chip:hover span { background: #E6ECE5; }
+.fp-chip input:checked + span { background: #12301F; color: #fff; }
+.fp-chip input:focus-visible + span { outline: 2px solid #1D7A56; outline-offset: 2px; }
+
+/* Kartu pilihan (radio): terpilih = latar hijau tua, tanpa ring */
+.fp-pilih { position: relative; display: block; cursor: pointer; }
+.fp-pilih input { position: absolute; width: 1px; height: 1px; opacity: 0; pointer-events: none; }
+.fp-pilih__isi {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    height: 100%;
+    padding: 16px 18px;
+    border-radius: 18px;
+    background: #F7F8F4;
+    color: #12301F;
+    transition: background-color .18s, color .18s;
+}
+.fp-pilih:hover .fp-pilih__isi { background: #EEF2EC; }
+.fp-pilih input:checked + .fp-pilih__isi { background: #12301F; color: #fff; }
+.fp-pilih input:checked + .fp-pilih__isi .fp-pilih__ket { color: rgba(255, 255, 255, .75); }
+.fp-pilih input:focus-visible + .fp-pilih__isi { outline: 2px solid #1D7A56; outline-offset: 2px; }
+.fp-pilih__judul { display: block; font-size: 15px; font-weight: 600; line-height: 1.35; }
+.fp-pilih__ket { display: block; margin-top: 3px; font-size: 13.5px; line-height: 1.5; color: #6B776F; }
+
+/* Saklar "tanggal fleksibel" */
+.fp-saklar { display: inline-flex; align-items: center; gap: 12px; cursor: pointer; font-size: 14.5px; font-weight: 500; color: #2F4A3A; }
+.fp-saklar input { position: absolute; width: 1px; height: 1px; opacity: 0; pointer-events: none; }
+.fp-saklar__jalur {
+    position: relative;
+    flex: none;
+    width: 44px;
+    height: 26px;
+    border-radius: 999px;
+    background: #D5DDD3;
+    transition: background-color .2s;
+}
+.fp-saklar__jalur::after {
+    content: '';
+    position: absolute;
+    top: 3px;
+    inset-inline-start: 3px;
+    width: 20px;
+    height: 20px;
+    border-radius: 999px;
+    background: #fff;
+    box-shadow: 0 2px 6px rgba(11, 31, 20, .25);
+    transition: transform .2s cubic-bezier(.22, 1, .36, 1);
+}
+.fp-saklar input:checked + .fp-saklar__jalur { background: #1D7A56; }
+.fp-saklar input:checked + .fp-saklar__jalur::after { transform: translateX(18px); }
+[dir='rtl'] .fp-saklar input:checked + .fp-saklar__jalur::after { transform: translateX(-18px); }
+.fp-saklar input:focus-visible + .fp-saklar__jalur { outline: 2px solid #1D7A56; outline-offset: 2px; }
+
+/* Tombol kirim */
+.fp-kirim {
+    display: inline-flex;
+    width: 100%;
+    min-height: 60px;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 0 28px;
+    border-radius: 999px;
+    background: #12301F;
+    color: #fff;
+    font-size: 16px;
+    font-weight: 600;
+    white-space: nowrap;
+    box-shadow: 0 20px 40px -22px rgba(18, 48, 31, .9);
+    transition: background-color .2s, transform .2s, box-shadow .2s;
+}
+.fp-kirim:hover:not(:disabled) { background: #1D7A56; transform: translateY(-1px); }
+.fp-kirim:active:not(:disabled) { transform: translateY(0) scale(.99); }
+.fp-kirim:disabled { cursor: wait; opacity: .7; }
+.fp-kirim:focus-visible { outline: 2px solid #1D7A56; outline-offset: 3px; }
+
+/* Panel ringkasan di kanan: diam di tempat (tidak ikut turun saat halaman di-scroll) */
+.fp-ringkas__foto { position: relative; isolation: isolate; aspect-ratio: 4 / 3; overflow: hidden; border-radius: 26px 26px 0 0; }
+.fp-ringkas__foto img { position: absolute; inset: 0; z-index: -2; width: 100%; height: 100%; object-fit: cover; }
+.fp-ringkas__foto::after { content: ''; position: absolute; inset: 0; z-index: -1; background: linear-gradient(180deg, rgba(8, 19, 13, 0) 40%, rgba(8, 19, 13, .78) 100%); }
+.fp-termasuk { display: grid; gap: 10px; }
+.fp-termasuk li { display: flex; align-items: flex-start; gap: 10px; font-size: 14.5px; line-height: 1.45; color: #2F4A3A; }
+.fp-termasuk svg { flex: none; width: 18px; height: 18px; margin-top: 1px; color: #1D7A56; }
+
+@media (prefers-reduced-motion: reduce) {
+    .fp-sampul__img { animation: none; transform: none; }
+    .fp-saklar__jalur::after, .fp-kirim, .fp-f { transition: none; }
+}

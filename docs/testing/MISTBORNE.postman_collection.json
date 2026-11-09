@@ -1,0 +1,1960 @@
+{
+  "info": {
+    "name": "MISTBORNE v4",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": "Koleksi lengkap seluruh route MISTBORNE (web.php + admin.php + personel). ALUR: setiap sesi baru, jalankan dulu Auth Admin > Halaman Masuk (GET) — ia menyimpan session cookie & CSRF token ke variabel koleksi; request bertulis memakai token itu lewat header X-CSRF-TOKEN (disuntik sinkron oleh pre-request) plus field _token. Setelah itu Proses Masuk (POST) untuk login. Catatan: beberapa request bertanda [UBAH DATA] mengubah data sungguhan saat dijalkan."
+  },
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://127.0.0.1:8000",
+      "description": "Alamat php artisan serve (tanpa garis miring di akhir)"
+    },
+    {
+      "key": "admin_email",
+      "value": "admin@mistborne.id",
+      "description": "Email login admin"
+    },
+    {
+      "key": "admin_password",
+      "value": "password",
+      "description": "Password admin (silakan sesuaikan)"
+    },
+    {
+      "key": "pesanan_id",
+      "value": "36",
+      "description": "ID pesanan yang sedang dicek (36 = MST-261016-BIST)"
+    },
+    {
+      "key": "perjalanan_id",
+      "value": "1",
+      "description": "1 = DIENG HIGHLAND ESCAPE"
+    },
+    {
+      "key": "tanggal_id",
+      "value": "1",
+      "description": "ID jadwal keberangkatan. Cek di halaman Jadwal Tanggal"
+    },
+    {
+      "key": "artikel_id",
+      "value": "1",
+      "description": "ID artikel. Cek di Daftar Artikel"
+    },
+    {
+      "key": "ulasan_id",
+      "value": "1",
+      "description": "ID ulasan. Cek di Daftar Ulasan"
+    },
+    {
+      "key": "personel_id",
+      "value": "1",
+      "description": "ID guide/driver. Cek di Guide & Driver"
+    },
+    {
+      "key": "pesanan_kustom_id",
+      "value": "1",
+      "description": "ID pesanan kustom. Cek di Daftar Pesanan Kustom"
+    },
+    {
+      "key": "notifikasi_id",
+      "value": "",
+      "description": "ID notifikasi (UUID). Isi sebelum request Baca Notifikasi"
+    },
+    {
+      "key": "token_reset",
+      "value": "",
+      "description": "Token dari email atur ulang sandi"
+    },
+    {
+      "key": "nama_tamu",
+      "value": "DATANYICIL",
+      "description": "Data asli pesanan 36, dipakai request Ubah Data Pesanan"
+    },
+    {
+      "key": "whatsapp",
+      "value": "628724682913",
+      "description": "Data asli pesanan 36 (format 62xx)"
+    },
+    {
+      "key": "whatsapp_08",
+      "value": "08724682913",
+      "description": "Nomor WA format 08 untuk form publik & buat pesanan"
+    },
+    {
+      "key": "nama_hotel",
+      "value": "hotel ASTON imperial bekasi",
+      "description": "Data asli pesanan 36"
+    },
+    {
+      "key": "lokasi_pickup",
+      "value": "Jl. KH. Noer Ali No.177, RT.001/RW.005, Kayuringin Jaya, Kec. Bekasi Sel., Kota Bks, Jawa Barat 17144",
+      "description": "Data asli pesanan 36"
+    },
+    {
+      "key": "jumlah_wisatawan",
+      "value": "2",
+      "description": "Data asli pesanan 36"
+    },
+    {
+      "key": "harga",
+      "value": "7000000",
+      "description": "Data asli pesanan 36"
+    },
+    {
+      "key": "paket_opsional",
+      "value": "-",
+      "description": "Data asli pesanan 36"
+    },
+    {
+      "key": "permintaan_khusus",
+      "value": "-",
+      "description": "Data asli pesanan 36"
+    },
+    {
+      "key": "waktu_pickup",
+      "value": "",
+      "description": "Opsional, format HH:MM (contoh 03:30)"
+    },
+    {
+      "key": "uji_nama",
+      "value": "Tamu Uji Coba",
+      "description": "Dipakai request Buat Pesanan Manual"
+    },
+    {
+      "key": "uji_whatsapp",
+      "value": "081234567890",
+      "description": "Dipakai request Buat Pesanan Manual"
+    },
+    {
+      "key": "uji_hotel",
+      "value": "Hotel Contoh",
+      "description": "Dipakai request Buat Pesanan Manual"
+    },
+    {
+      "key": "uji_pickup",
+      "value": "Jl. Contoh No. 1",
+      "description": "Dipakai request Buat Pesanan Manual"
+    },
+    {
+      "key": "uji_jumlah",
+      "value": "2",
+      "description": "Dipakai request Buat Pesanan Manual"
+    },
+    {
+      "key": "uji_tanggal_trip",
+      "value": "2026-11-20",
+      "description": "Format YYYY-MM-DD. Form web hanya menawarkan tanggal mulai H+7"
+    },
+    {
+      "key": "tanggal_ganti_jadwal",
+      "value": "2026-11-05",
+      "description": "Tanggal baru untuk Ganti Jadwal. Jadwal terkunci di H-7"
+    },
+    {
+      "key": "jenis_pembayaran",
+      "value": "lunas",
+      "description": "Nilai uang_muka atau lunas"
+    },
+    {
+      "key": "nominal_dibayar",
+      "value": "7000000",
+      "description": "Nominal pembayaran"
+    },
+    {
+      "key": "metode_pembayaran",
+      "value": "transfer",
+      "description": "transfer | qris | tunai | lainnya (nilai enum riil)"
+    },
+    {
+      "key": "pihak_pembatal",
+      "value": "tamu",
+      "description": "tamu | admin (nilai enum riil; cek BatalkanPesanan::PIHAK)"
+    },
+    {
+      "key": "alasan_batal",
+      "value": "Uji coba pembatalan",
+      "description": "Alasan pembatalan"
+    },
+    {
+      "key": "nominal_refund",
+      "value": "0",
+      "description": "Nominal refund"
+    },
+    {
+      "key": "guide_personel_id",
+      "value": "",
+      "description": "ID guide untuk penugasan. Kosong = lepas penugasan"
+    },
+    {
+      "key": "driver_personel_id",
+      "value": "",
+      "description": "ID driver untuk penugasan. Kosong = lepas penugasan"
+    },
+    {
+      "key": "catatan_admin",
+      "value": "",
+      "description": "Catatan admin pada Simpan Operasional (opsional)"
+    },
+    {
+      "key": "jenis_pengingat",
+      "value": "h7",
+      "description": "Hanya boleh h7, h3, atau h2"
+    },
+    {
+      "key": "filter_status",
+      "value": "payment",
+      "description": "Nilai enum BookingStatus, mis. payment"
+    },
+    {
+      "key": "filter_cari",
+      "value": "DATANYICIL",
+      "description": "Cari kode, nama, atau WhatsApp"
+    },
+    {
+      "key": "filter_sumber",
+      "value": "manual",
+      "description": "form atau manual"
+    },
+    {
+      "key": "filter_dari",
+      "value": "2026-10-01",
+      "description": "Format YYYY-MM-DD"
+    },
+    {
+      "key": "filter_sampai",
+      "value": "2026-10-31",
+      "description": "Harus sama atau setelah filter_dari"
+    },
+    {
+      "key": "per_halaman",
+      "value": "10",
+      "description": "1 sampai 100"
+    },
+    {
+      "key": "mode_jadwal",
+      "value": "satu",
+      "description": "satu | rentang (Simpan Tanggal Jadwal)"
+    },
+    {
+      "key": "jadwal_tanggal",
+      "value": "2026-12-01",
+      "description": "Tanggal baru (mode=satu), format YYYY-MM-DD, minimal hari ini"
+    },
+    {
+      "key": "jadwal_mulai",
+      "value": "2026-12-05",
+      "description": "Tanggal mulai rentang (mode=rentang)"
+    },
+    {
+      "key": "jadwal_selesai",
+      "value": "2026-12-10",
+      "description": "Tanggal selesai rentang (mode=rentang)"
+    },
+    {
+      "key": "jadwal_kuota",
+      "value": "",
+      "description": "Kuota per tanggal, 1-50. Kosong = tanpa kuota"
+    },
+    {
+      "key": "artikel_judul",
+      "value": "Judul Uji Coba",
+      "description": "Dipakai Simpan / Perbarui Artikel"
+    },
+    {
+      "key": "artikel_kategori",
+      "value": "wisata",
+      "description": "Salah satu dari config('mistborne.kategori_artikel')"
+    },
+    {
+      "key": "artikel_ringkasan",
+      "value": "Ringkasan uji coba artikel.",
+      "description": "Maksimal 500 karakter"
+    },
+    {
+      "key": "artikel_isi",
+      "value": "Isi artikel uji coba.",
+      "description": "Isi artikel"
+    },
+    {
+      "key": "artikel_aksi",
+      "value": "terbitkan",
+      "description": "draft | terbitkan"
+    },
+    {
+      "key": "ulasan_rating",
+      "value": "5",
+      "description": "Rating 1-5 (form rating publik)"
+    },
+    {
+      "key": "ulasan_komentar",
+      "value": "Perjalanan sangat menyenangkan.",
+      "description": "Komentar ulasan (maks 2000)"
+    },
+    {
+      "key": "ulasan_izin",
+      "value": "1",
+      "description": "izin_tampil: 1/0"
+    },
+    {
+      "key": "kustom_nama",
+      "value": "Tamu Kustom",
+      "description": "Dipakai Rancang Trip Kustom"
+    },
+    {
+      "key": "kustom_whatsapp",
+      "value": "081234567890",
+      "description": "Format 08xx"
+    },
+    {
+      "key": "kustom_destinasi",
+      "value": "Bromo Sunrise Journey",
+      "description": "Destinasi diinginkan"
+    },
+    {
+      "key": "kustom_jadwal",
+      "value": "Minggu kedua November 2026",
+      "description": "Jadwal diinginkan (bebas)"
+    },
+    {
+      "key": "kustom_jumlah",
+      "value": "4",
+      "description": "Jumlah orang 1-50"
+    },
+    {
+      "key": "kustom_catatan",
+      "value": "Kami ingin jemput di Surabaya.",
+      "description": "Catatan (opsional)"
+    },
+    {
+      "key": "rating_token",
+      "value": "",
+      "description": "Token halaman /rating/{token} dari email/kirim tautan"
+    },
+    {
+      "key": "ujungan_csrf",
+      "value": "",
+      "description": "Header token akun panel personel untuk request Uji Akses Panel Personel"
+    },
+    {
+      "key": "pax_booking",
+      "value": "2",
+      "description": "Jumlah pax pada form booking publik"
+    },
+    {
+      "key": "destination_booking",
+      "value": "BROMO SUNRISE JOURNEY",
+      "description": "Nama journey persis seperti kartu"
+    },
+    {
+      "key": "tanggal_booking",
+      "value": "2026-11-20",
+      "description": "Tanggal trip booking publik (H+7 ke atas)"
+    },
+    {
+      "key": "nama_profil",
+      "value": "Admin MISTBORNE",
+      "description": "Dipakai Perbarui Profil Admin"
+    },
+    {
+      "key": "jabatan_profil",
+      "value": "Owner",
+      "description": "Dipakai Perbarui Profil Admin"
+    },
+    {
+      "key": "sandibaru",
+      "value": "password-baru",
+      "description": "Dipakai Atur Ulang Sandi (min 8)"
+    },
+    {
+      "key": "sandibaru_confirmation",
+      "value": "password-baru",
+      "description": "Harus sama dengan sandibaru"
+    },
+    {
+      "key": "nama_personel",
+      "value": "Guide Uji Coba",
+      "description": "Nama personel baru / perbarui"
+    },
+    {
+      "key": "peran_personel",
+      "value": "guide",
+      "description": "guide | driver"
+    },
+    {
+      "key": "wa_personel",
+      "value": "081234567891",
+      "description": "WhatsApp personel (opsional)"
+    },
+    {
+      "key": "email_personel",
+      "value": "guide.demo.01@mistborne.test",
+      "description": "Email akun panel (wajib jika buat_akun_panel=1)"
+    },
+    {
+      "key": "buat_akun_panel",
+      "value": "0",
+      "description": "1 = buatkan akun panel personel"
+    },
+    {
+      "key": "perjalanan_nama",
+      "value": "Trip Uji Coba",
+      "description": "Nama journey baru (unik)"
+    },
+    {
+      "key": "maks_orang",
+      "value": "10",
+      "description": "Kapasitas maksimum 1-20"
+    },
+    {
+      "key": "nomor_wa_admin",
+      "value": "6289999999999",
+      "description": "Nomor WhatsApp admin di Pengaturan"
+    },
+    {
+      "key": "persen_charge",
+      "value": "10",
+      "description": "Persen charge ganti jadwal"
+    },
+    {
+      "key": "batas_bayar",
+      "value": "4",
+      "description": "Batas bayar hari"
+    },
+    {
+      "key": "kuota_default",
+      "value": "10",
+      "description": "Kuota default"
+    },
+    {
+      "key": "batas_ulasan",
+      "value": "14",
+      "description": "Batas ulasan hari"
+    },
+    {
+      "key": "batas_video_mb",
+      "value": "50",
+      "description": "Batas video MB"
+    },
+    {
+      "key": "csrf_token",
+      "value": "",
+      "description": "Diisi otomatis oleh script koleksi (X-CSRF-TOKEN)"
+    },
+    {
+      "key": "sandi_profil",
+      "value": "",
+      "description": "Opsional. Sertakan jika ingin mengganti sandi admin saat Perbarui Profil"
+    }
+  ],
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "exec": [
+          "// GUARD: request wajib punya token dari sesi yang SAMA.",
+          "// Jika belum pernah menjalankan \"Auth Admin > Halaman Masuk (GET)\"",
+          "// (yang menyimpan token & cookie sesi), stop dengan pesan jelas",
+          "// alih-alih lanjut lalu 419 Page Expired.",
+          "const t = pm.collectionVariables.get('csrf_token');",
+          "const url = pm.request.url.toString();",
+          "const requestBebasAuth = /admin\\/masuk|admin\\/lupa-sandi|admin\\/atur-ulang-sandi|debug\\/pesanan|login\\/google|\\/rating\\/|\\/journey|\\/galeri|\\/artikel|rancang-trip-kustom|beranda|^https?:\\/\\/[^/]+\\/$/.test(url);",
+          "",
+          "if (!t && !requestBebasAuth) {",
+          "  throw new Error('BELUM PROSES MASUK: jalankan \"Auth Admin > Halaman Masuk (GET)\" dulu (GET menyimpan token & cookie sesi), lalu \"Auth Admin > Proses Masuk (POST)\" untuk login. Setelah itu request boleh dijalankan.');",
+          "}",
+          "if (t) pm.request.headers.upsert({ key: 'X-CSRF-TOKEN', value: t });"
+        ]
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "exec": [
+          "// GUARD hasil: jika kena 419 (Page Expired) atau redirect ke halaman masuk,",
+          "// berarti sesi belum dibuka/expired — jelaskan cara memperbaikinya.",
+          "if (pm.response.code === 419) {",
+          "  console.error('⚠️ 419 Page Expired: sesi/token tidak cocok. Jalankan ulang \"Auth Admin > Halaman Masuk (GET)\" lalu \"Proses Masuk (POST)\". Lihat docs/testing/TESTING.md catatan 419 bila ada.');",
+          "} else if (pm.response.code === 302 && (pm.response.headers.get('Location')||'').includes('masuk')) {",
+          "  console.error('⚠️ Belum login (redirect ke halaman masuk). Jalankan \"Auth Admin > Proses Masuk (POST)\" dulu.');",
+          "}"
+        ]
+      }
+    }
+  ],
+  "item": [
+    {
+      "name": "Publik",
+      "item": [
+        {
+          "name": "Beranda ID (GET)",
+          "request": {
+            "method": "GET",
+            "url": "{{base_url}}/"
+          }
+        },
+        {
+          "name": "Beranda Locale (GET)",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{base_url}}/en",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "en"
+              ]
+            },
+            "description": "en|ms|zh|ja|ko|es|fr|ar"
+          }
+        },
+        {
+          "name": "Redirect /id 301 (GET)",
+          "request": {
+            "method": "GET",
+            "url": "{{base_url}}/id"
+          }
+        },
+        {
+          "name": "Journey (GET)",
+          "request": {
+            "method": "GET",
+            "url": "{{base_url}}/journey"
+          }
+        },
+        {
+          "name": "Journey Locale (GET)",
+          "request": {
+            "method": "GET",
+            "url": "{{base_url}}/en/journey"
+          }
+        },
+        {
+          "name": "Galeri (GET)",
+          "request": {
+            "method": "GET",
+            "url": "{{base_url}}/galeri"
+          }
+        },
+        {
+          "name": "Galeri Locale (GET)",
+          "request": {
+            "method": "GET",
+            "url": "{{base_url}}/en/galeri"
+          }
+        },
+        {
+          "name": "Artikel (GET)",
+          "request": {
+            "method": "GET",
+            "url": "{{base_url}}/artikel"
+          }
+        },
+        {
+          "name": "Artikel Locale (GET)",
+          "request": {
+            "method": "GET",
+            "url": "{{base_url}}/en/artikel"
+          }
+        },
+        {
+          "name": "Rancang Trip Kustom Form (GET)",
+          "request": {
+            "method": "GET",
+            "url": "{{base_url}}/rancang-trip-kustom"
+          }
+        },
+        {
+          "name": "Rancang Trip Kustom Simpan (POST) [UBAH DATA]",
+          "request": {
+            "method": "POST",
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "key": "nama",
+                  "value": "{{kustom_nama}}"
+                },
+                {
+                  "key": "whatsapp",
+                  "value": "{{kustom_whatsapp}}"
+                },
+                {
+                  "key": "destinasi_diinginkan",
+                  "value": "{{kustom_destinasi}}"
+                },
+                {
+                  "key": "jadwal_diinginkan",
+                  "value": "{{kustom_jadwal}}"
+                },
+                {
+                  "key": "jumlah_orang",
+                  "value": "{{kustom_jumlah}}"
+                },
+                {
+                  "key": "catatan",
+                  "value": "{{kustom_catatan}}"
+                },
+                {
+                  "key": "website",
+                  "value": "",
+                  "type": "text",
+                  "description": "Honeypot anti-bot: biarkan kosong"
+                }
+              ]
+            },
+            "url": "{{base_url}}/rancang-trip-kustom"
+          }
+        },
+        {
+          "name": "Booking Halaman Form (GET)",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{base_url}}/booking?destination={{destination_booking}}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "booking"
+              ],
+              "query": [
+                {
+                  "key": "destination",
+                  "value": "{{destination_booking}}"
+                }
+              ]
+            },
+            "description": "Wajib login Google. Tamu yang belum login di-redirect ke /login/google?intent=booking"
+          }
+        },
+        {
+          "name": "Booking Simpan (POST) [UBAH DATA]",
+          "request": {
+            "method": "POST",
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "key": "token_booking",
+                  "value": "",
+                  "description": "UUID dari halaman form; kosongkan kalau sudah punya pesanan"
+                },
+                {
+                  "key": "destination",
+                  "value": "{{destination_booking}}"
+                },
+                {
+                  "key": "pax",
+                  "value": "{{pax_booking}}"
+                },
+                {
+                  "key": "nama_lengkap",
+                  "value": "{{uji_nama}}"
+                },
+                {
+                  "key": "whatsapp",
+                  "value": "{{uji_whatsapp}}"
+                },
+                {
+                  "key": "tanggal_trip",
+                  "value": "{{tanggal_booking}}"
+                },
+                {
+                  "key": "nama_hotel",
+                  "value": "{{uji_hotel}}"
+                },
+                {
+                  "key": "lokasi_pickup",
+                  "value": "{{uji_pickup}}"
+                },
+                {
+                  "key": "waktu_pickup",
+                  "value": "{{waktu_pickup}}",
+                  "disabled": true
+                },
+                {
+                  "key": "paket_opsional",
+                  "value": "-"
+                },
+                {
+                  "key": "permintaan_khusus",
+                  "value": "-"
+                }
+              ]
+            },
+            "url": "{{base_url}}/booking"
+          }
+        },
+        {
+          "name": "Login Google Redirect (GET)",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{base_url}}/login/google?intent=booking&destination={{destination_booking}}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "login",
+                "google"
+              ],
+              "query": [
+                {
+                  "key": "intent",
+                  "value": "booking"
+                },
+                {
+                  "key": "destination",
+                  "value": "{{destination_booking}}"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Login Google Callback (GET)",
+          "request": {
+            "method": "GET",
+            "url": "{{base_url}}/login/google/callback",
+            "description": "Biasanya hanya diakses oleh redirect OAuth"
+          }
+        },
+        {
+          "name": "Keluar (POST)",
+          "request": {
+            "method": "POST",
+            "url": "{{base_url}}/keluar"
+          }
+        },
+        {
+          "name": "Rating Formulir (GET)",
+          "request": {
+            "method": "GET",
+            "url": "{{base_url}}/rating/{{rating_token}}"
+          }
+        },
+        {
+          "name": "Rating Simpan (POST)",
+          "request": {
+            "method": "POST",
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "key": "rating",
+                  "value": "{{ulasan_rating}}"
+                },
+                {
+                  "key": "komentar",
+                  "value": "{{ulasan_komentar}}"
+                },
+                {
+                  "key": "izin_tampil",
+                  "value": "{{ulasan_izin}}"
+                }
+              ]
+            },
+            "url": "{{base_url}}/rating/{{rating_token}}"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Auth Admin",
+      "item": [
+        {
+          "name": "Halaman Masuk (GET)",
+          "request": {
+            "method": "GET",
+            "url": "{{base_url}}/admin/masuk",
+            "description": "JALANKAN INI DULU setiap sesi baru: menyimpan cookie sesi + CSRF token ke variabel koleksi (dipakai semua request bertulis). Tanpa ini, POST akan 419."
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "// Simpan CSRF token sesi INI ke variabel koleksi. Token ini dari",
+                  "// respons dengan cookie sesi yang sama dengan request POST berikutnya",
+                  "// (lv_SESSION), jadi cocok dan tidak memicu 419.",
+                  "const m = /name=\"csrf-token\" content=\"([^\"]+)\"/.exec(pm.response.text());",
+                  "if (m) {",
+                  "  pm.collectionVariables.set('csrf_token', m[1]);",
+                  "  console.log('csrf_token tersimpan untuk sesi ini.');",
+                  "} else {",
+                  "  console.warn('Pola meta csrf-token tidak ditemukan di halaman masuk.');",
+                  "}",
+                  "",
+                  "// Sinyal sukses kegagalan untuk pengecekan manual",
+                  "pm.test('status 200', () => pm.response.to.have.status(200));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Proses Masuk (POST)",
+          "request": {
+            "method": "POST",
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "key": "_token",
+                  "value": "{{csrf_token}}",
+                  "type": "text"
+                },
+                {
+                  "key": "email",
+                  "value": "{{admin_email}}"
+                },
+                {
+                  "key": "password",
+                  "value": "{{admin_password}}"
+                }
+              ]
+            },
+            "url": "{{base_url}}/admin/masuk"
+          }
+        },
+        {
+          "name": "Keluar (POST)",
+          "request": {
+            "method": "POST",
+            "url": "{{base_url}}/admin/keluar"
+          }
+        },
+        {
+          "name": "Halaman Lupa Sandi (GET)",
+          "request": {
+            "method": "GET",
+            "url": "{{base_url}}/admin/lupa-sandi"
+          }
+        },
+        {
+          "name": "Kirim Tautan Reset (POST)",
+          "request": {
+            "method": "POST",
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "key": "email",
+                  "value": "{{admin_email}}"
+                }
+              ]
+            },
+            "url": "{{base_url}}/admin/lupa-sandi"
+          }
+        },
+        {
+          "name": "Halaman Atur Ulang Sandi (GET)",
+          "request": {
+            "method": "GET",
+            "url": "{{base_url}}/admin/atur-ulang-sandi/{{token_reset}}"
+          }
+        },
+        {
+          "name": "Simpan Sandi Baru (POST)",
+          "request": {
+            "method": "POST",
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "key": "email",
+                  "value": "{{admin_email}}"
+                },
+                {
+                  "key": "password",
+                  "value": "{{sandibaru}}"
+                },
+                {
+                  "key": "password_confirmation",
+                  "value": "{{sandibaru_confirmation}}"
+                },
+                {
+                  "key": "token",
+                  "value": "{{token_reset}}"
+                }
+              ]
+            },
+            "url": "{{base_url}}/admin/atur-ulang-sandi"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Dashboard",
+      "item": [
+        {
+          "name": "Dashboard (GET)",
+          "request": {
+            "method": "GET",
+            "url": "{{base_url}}/admin"
+          }
+        },
+        {
+          "name": "Baca Notifikasi (POST) [UBAH DATA]",
+          "request": {
+            "method": "POST",
+            "url": "{{base_url}}/admin/notifikasi/{{notifikasi_id}}/baca"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Pesanan",
+      "item": [
+        {
+          "name": "Daftar Pesanan (GET)",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{base_url}}/admin/pesanan?status={{filter_status}}&cari={{filter_cari}}&journey={{perjalanan_id}}&sumber={{filter_sumber}}&dari={{filter_dari}}&sampai={{filter_sampai}}&per_halaman={{per_halaman}}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "admin",
+                "pesanan"
+              ],
+              "query": [
+                {
+                  "key": "status",
+                  "value": "{{filter_status}}"
+                },
+                {
+                  "key": "cari",
+                  "value": "{{filter_cari}}"
+                },
+                {
+                  "key": "journey",
+                  "value": "{{perjalanan_id}}"
+                },
+                {
+                  "key": "sumber",
+                  "value": "{{filter_sumber}}"
+                },
+                {
+                  "key": "dari",
+                  "value": "{{filter_dari}}"
+                },
+                {
+                  "key": "sampai",
+                  "value": "{{filter_sampai}}"
+                },
+                {
+                  "key": "per_halaman",
+                  "value": "{{per_halaman}}"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Daftar Pesanan Tanpa Filter (GET)",
+          "request": {
+            "method": "GET",
+            "url": "{{base_url}}/admin/pesanan"
+          }
+        },
+        {
+          "name": "Detail Pesanan (GET)",
+          "request": {
+            "method": "GET",
+            "url": "{{base_url}}/admin/pesanan/{{pesanan_id}}"
+          }
+        },
+        {
+          "name": "Form Buat Pesanan (GET)",
+          "request": {
+            "method": "GET",
+            "url": "{{base_url}}/admin/pesanan/buat"
+          }
+        },
+        {
+          "name": "Form Ubah Pesanan (GET)",
+          "request": {
+            "method": "GET",
+            "url": "{{base_url}}/admin/pesanan/{{pesanan_id}}/ubah"
+          }
+        },
+        {
+          "name": "Lihat Bukti Pembayaran (GET)",
+          "request": {
+            "method": "GET",
+            "url": "{{base_url}}/admin/pesanan/{{pesanan_id}}/bukti-pembayaran"
+          }
+        },
+        {
+          "name": "Hapus Bukti Pembayaran (DELETE) [UBAH DATA]",
+          "request": {
+            "method": "DELETE",
+            "url": "{{base_url}}/admin/pesanan/{{pesanan_id}}/bukti-pembayaran"
+          }
+        },
+        {
+          "name": "Buat Pesanan Manual (POST) [UBAH DATA]",
+          "request": {
+            "method": "POST",
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "key": "perjalanan_id",
+                  "value": "{{perjalanan_id}}"
+                },
+                {
+                  "key": "tanggal_trip",
+                  "value": "{{uji_tanggal_trip}}"
+                },
+                {
+                  "key": "nama_lengkap",
+                  "value": "{{uji_nama}}"
+                },
+                {
+                  "key": "whatsapp",
+                  "value": "{{uji_whatsapp}}"
+                },
+                {
+                  "key": "nama_hotel",
+                  "value": "{{uji_hotel}}"
+                },
+                {
+                  "key": "lokasi_pickup",
+                  "value": "{{uji_pickup}}"
+                },
+                {
+                  "key": "waktu_pickup",
+                  "value": "{{waktu_pickup}}",
+                  "disabled": true
+                },
+                {
+                  "key": "jumlah_wisatawan",
+                  "value": "{{uji_jumlah}}"
+                },
+                {
+                  "key": "paket_opsional",
+                  "value": "-"
+                },
+                {
+                  "key": "permintaan_khusus",
+                  "value": "-"
+                }
+              ]
+            },
+            "url": "{{base_url}}/admin/pesanan"
+          }
+        },
+        {
+          "name": "Ubah Data Pesanan (PUT) [UBAH DATA]",
+          "request": {
+            "method": "POST",
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "key": "_method",
+                  "value": "PUT"
+                },
+                {
+                  "key": "nama_lengkap",
+                  "value": "{{nama_tamu}}"
+                },
+                {
+                  "key": "whatsapp",
+                  "value": "{{whatsapp}}"
+                },
+                {
+                  "key": "nama_hotel",
+                  "value": "{{nama_hotel}}"
+                },
+                {
+                  "key": "lokasi_pickup",
+                  "value": "{{lokasi_pickup}}"
+                },
+                {
+                  "key": "waktu_pickup",
+                  "value": "{{waktu_pickup}}",
+                  "disabled": true
+                },
+                {
+                  "key": "jumlah_wisatawan",
+                  "value": "{{jumlah_wisatawan}}"
+                },
+                {
+                  "key": "paket_opsional",
+                  "value": "{{paket_opsional}}"
+                },
+                {
+                  "key": "permintaan_khusus",
+                  "value": "{{permintaan_khusus}}"
+                },
+                {
+                  "key": "harga",
+                  "value": "{{harga}}"
+                }
+              ]
+            },
+            "url": "{{base_url}}/admin/pesanan/{{pesanan_id}}"
+          }
+        },
+        {
+          "name": "Konfirmasi (PATCH) [UBAH DATA]",
+          "request": {
+            "method": "PATCH",
+            "url": "{{base_url}}/admin/pesanan/{{pesanan_id}}/konfirmasi"
+          }
+        },
+        {
+          "name": "Ubah ke Payment (PATCH) [UBAH DATA]",
+          "request": {
+            "method": "PATCH",
+            "url": "{{base_url}}/admin/pesanan/{{pesanan_id}}/payment"
+          }
+        },
+        {
+          "name": "Catat Pembayaran Diterima (PATCH) [UBAH DATA]",
+          "request": {
+            "method": "PATCH",
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "key": "jenis_pembayaran",
+                  "value": "{{jenis_pembayaran}}"
+                },
+                {
+                  "key": "nominal_dibayar",
+                  "value": "{{nominal_dibayar}}"
+                },
+                {
+                  "key": "metode_pembayaran",
+                  "value": "{{metode_pembayaran}}"
+                }
+              ]
+            },
+            "url": "{{base_url}}/admin/pesanan/{{pesanan_id}}/pembayaran-diterima"
+          }
+        },
+        {
+          "name": "Halaman Catat Pembayaran (GET, redirect)",
+          "request": {
+            "method": "GET",
+            "url": "{{base_url}}/admin/pesanan/{{pesanan_id}}/pembayaran-diterima",
+            "description": "Fallback: redirect ke halaman detail pesanan. Untuk mencatat pembayaran tetap pakai request PATCH di atasnya."
+          }
+        },
+        {
+          "name": "Simpan Operasional (PUT, form-data) [UBAH DATA]",
+          "request": {
+            "method": "POST",
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "_method",
+                  "value": "PUT",
+                  "type": "text"
+                },
+                {
+                  "key": "guide_personel_id",
+                  "value": "{{guide_personel_id}}",
+                  "type": "text"
+                },
+                {
+                  "key": "driver_personel_id",
+                  "value": "{{driver_personel_id}}",
+                  "type": "text"
+                },
+                {
+                  "key": "catatan_admin",
+                  "value": "{{catatan_admin}}",
+                  "type": "text"
+                },
+                {
+                  "key": "bukti_pembayaran",
+                  "type": "file",
+                  "src": []
+                }
+              ]
+            },
+            "url": "{{base_url}}/admin/pesanan/{{pesanan_id}}/operasional"
+          }
+        },
+        {
+          "name": "Ganti Jadwal (POST) [UBAH DATA]",
+          "request": {
+            "method": "POST",
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "key": "tanggal_trip",
+                  "value": "{{tanggal_ganti_jadwal}}"
+                }
+              ]
+            },
+            "url": "{{base_url}}/admin/pesanan/{{pesanan_id}}/ganti-jadwal"
+          }
+        },
+        {
+          "name": "Batalkan (POST) [UBAH DATA]",
+          "request": {
+            "method": "POST",
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "key": "pihak_pembatal",
+                  "value": "{{pihak_pembatal}}"
+                },
+                {
+                  "key": "alasan_batal",
+                  "value": "{{alasan_batal}}"
+                },
+                {
+                  "key": "nominal_refund",
+                  "value": "{{nominal_refund}}"
+                }
+              ]
+            },
+            "url": "{{base_url}}/admin/pesanan/{{pesanan_id}}/batalkan"
+          }
+        },
+        {
+          "name": "Hold / Lepas Hold (PATCH) [UBAH DATA]",
+          "request": {
+            "method": "PATCH",
+            "url": "{{base_url}}/admin/pesanan/{{pesanan_id}}/hold"
+          }
+        },
+        {
+          "name": "Selesaikan (PATCH) [UBAH DATA]",
+          "request": {
+            "method": "PATCH",
+            "url": "{{base_url}}/admin/pesanan/{{pesanan_id}}/selesaikan"
+          }
+        },
+        {
+          "name": "Hapus Pesanan (DELETE) [UBAH DATA]",
+          "request": {
+            "method": "DELETE",
+            "url": "{{base_url}}/admin/pesanan/{{pesanan_id}}"
+          }
+        },
+        {
+          "name": "Tandai Pengingat (PATCH) [UBAH DATA]",
+          "request": {
+            "method": "PATCH",
+            "url": "{{base_url}}/admin/pesanan/{{pesanan_id}}/pengingat/{{jenis_pengingat}}"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Pesanan Kustom",
+      "item": [
+        {
+          "name": "Daftar Pesanan Kustom (GET)",
+          "request": {
+            "method": "GET",
+            "url": "{{base_url}}/admin/pesanan-kustom"
+          }
+        },
+        {
+          "name": "Perbarui Pesanan Kustom (PUT) [UBAH DATA]",
+          "request": {
+            "method": "POST",
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "key": "_method",
+                  "value": "PUT"
+                },
+                {
+                  "key": "perjalanan_id",
+                  "value": "{{perjalanan_id}}"
+                },
+                {
+                  "key": "tanggal_trip",
+                  "value": "{{uji_tanggal_trip}}"
+                },
+                {
+                  "key": "nama_hotel",
+                  "value": "{{uji_hotel}}"
+                },
+                {
+                  "key": "lokasi_pickup",
+                  "value": "{{uji_pickup}}"
+                },
+                {
+                  "key": "harga_final",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "nama_pendamping",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "status",
+                  "value": "{{filter_status}}"
+                },
+                {
+                  "key": "catatan",
+                  "value": ""
+                }
+              ]
+            },
+            "url": "{{base_url}}/admin/pesanan-kustom/{{pesanan_kustom_id}}"
+          }
+        },
+        {
+          "name": "Arsipkan Pesanan Kustom (DELETE) [UBAH DATA]",
+          "request": {
+            "method": "DELETE",
+            "url": "{{base_url}}/admin/pesanan-kustom/{{pesanan_kustom_id}}"
+          }
+        },
+        {
+          "name": "Pulihkan (PATCH) [UBAH DATA]",
+          "request": {
+            "method": "PATCH",
+            "url": "{{base_url}}/admin/pesanan-kustom/{{pesanan_kustom_id}}/pulihkan"
+          }
+        },
+        {
+          "name": "Jadikan Resmi (POST) [UBAH DATA]",
+          "request": {
+            "method": "POST",
+            "url": "{{base_url}}/admin/pesanan-kustom/{{pesanan_kustom_id}}/jadikan-resmi"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Perjalanan & Jadwal",
+      "item": [
+        {
+          "name": "Daftar Perjalanan (GET)",
+          "request": {
+            "method": "GET",
+            "url": "{{base_url}}/admin/perjalanan"
+          }
+        },
+        {
+          "name": "Form Buat Perjalanan (GET)",
+          "request": {
+            "method": "GET",
+            "url": "{{base_url}}/admin/perjalanan/buat"
+          }
+        },
+        {
+          "name": "Form Ubah Perjalanan (GET)",
+          "request": {
+            "method": "GET",
+            "url": "{{base_url}}/admin/perjalanan/{{perjalanan_id}}/ubah"
+          }
+        },
+        {
+          "name": "Simpan Perjalanan Baru (POST) [UBAH DATA]",
+          "request": {
+            "method": "POST",
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "key": "nama",
+                  "value": "{{perjalanan_nama}}"
+                },
+                {
+                  "key": "maks_orang",
+                  "value": "{{maks_orang}}"
+                }
+              ]
+            },
+            "url": "{{base_url}}/admin/perjalanan"
+          }
+        },
+        {
+          "name": "Perbarui Perjalanan (PUT) [UBAH DATA]",
+          "request": {
+            "method": "POST",
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "key": "_method",
+                  "value": "PUT"
+                },
+                {
+                  "key": "nama",
+                  "value": "{{perjalanan_nama}}"
+                },
+                {
+                  "key": "maks_orang",
+                  "value": "{{maks_orang}}"
+                }
+              ]
+            },
+            "url": "{{base_url}}/admin/perjalanan/{{perjalanan_id}}"
+          }
+        },
+        {
+          "name": "Hapus Perjalanan (DELETE) [UBAH DATA]",
+          "request": {
+            "method": "DELETE",
+            "url": "{{base_url}}/admin/perjalanan/{{perjalanan_id}}"
+          }
+        },
+        {
+          "name": "Sembunyikan dari Beranda (PATCH) [UBAH DATA]",
+          "request": {
+            "method": "PATCH",
+            "url": "{{base_url}}/admin/perjalanan/{{perjalanan_id}}/sembunyikan"
+          }
+        },
+        {
+          "name": "Jadwal Tanggal (GET)",
+          "request": {
+            "method": "GET",
+            "url": "{{base_url}}/admin/perjalanan/{{perjalanan_id}}/tanggal"
+          }
+        },
+        {
+          "name": "Simpan Tanggal Jadwal (POST) [UBAH DATA]",
+          "request": {
+            "method": "POST",
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "key": "mode",
+                  "value": "{{mode_jadwal}}"
+                },
+                {
+                  "key": "tanggal",
+                  "value": "{{jadwal_tanggal}}"
+                },
+                {
+                  "key": "tanggal_mulai",
+                  "value": "{{jadwal_mulai}}"
+                },
+                {
+                  "key": "tanggal_selesai",
+                  "value": "{{jadwal_selesai}}"
+                },
+                {
+                  "key": "kuota",
+                  "value": "{{jadwal_kuota}}"
+                }
+              ]
+            },
+            "url": "{{base_url}}/admin/perjalanan/{{perjalanan_id}}/tanggal"
+          }
+        },
+        {
+          "name": "Perbarui Kuota (PUT) [UBAH DATA]",
+          "request": {
+            "method": "POST",
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "key": "_method",
+                  "value": "PUT"
+                },
+                {
+                  "key": "kuota",
+                  "value": "{{jadwal_kuota}}"
+                }
+              ]
+            },
+            "url": "{{base_url}}/admin/perjalanan/{{perjalanan_id}}/tanggal/{{tanggal_id}}"
+          }
+        },
+        {
+          "name": "Blokir Tanggal (PATCH) [UBAH DATA]",
+          "request": {
+            "method": "PATCH",
+            "url": "{{base_url}}/admin/perjalanan/{{perjalanan_id}}/tanggal/{{tanggal_id}}/blokir"
+          }
+        },
+        {
+          "name": "Hapus Jadwal (DELETE) [UBAH DATA]",
+          "request": {
+            "method": "DELETE",
+            "url": "{{base_url}}/admin/perjalanan/{{perjalanan_id}}/tanggal/{{tanggal_id}}"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Operasional",
+      "item": [
+        {
+          "name": "Guide & Driver (GET)",
+          "request": {
+            "method": "GET",
+            "url": "{{base_url}}/admin/guide-driver"
+          }
+        },
+        {
+          "name": "Foto Personel (GET)",
+          "request": {
+            "method": "GET",
+            "url": "{{base_url}}/admin/guide-driver/{{personel_id}}/foto"
+          }
+        },
+        {
+          "name": "Simpan Personel Baru (POST) [UBAH DATA]",
+          "request": {
+            "method": "POST",
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "key": "nama",
+                  "value": "{{nama_personel}}"
+                },
+                {
+                  "key": "peran",
+                  "value": "{{peran_personel}}"
+                },
+                {
+                  "key": "whatsapp",
+                  "value": "{{wa_personel}}"
+                },
+                {
+                  "key": "buat_akun_panel",
+                  "value": "{{buat_akun_panel}}"
+                },
+                {
+                  "key": "email",
+                  "value": "{{email_personel}}",
+                  "disabled": true
+                }
+              ]
+            },
+            "url": "{{base_url}}/admin/guide-driver"
+          }
+        },
+        {
+          "name": "Perbarui Personel (PUT) [UBAH DATA]",
+          "request": {
+            "method": "POST",
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "key": "_method",
+                  "value": "PUT"
+                },
+                {
+                  "key": "nama",
+                  "value": "{{nama_personel}}"
+                },
+                {
+                  "key": "peran",
+                  "value": "{{peran_personel}}"
+                },
+                {
+                  "key": "whatsapp",
+                  "value": "{{wa_personel}}"
+                },
+                {
+                  "key": "buat_akun_panel",
+                  "value": "{{buat_akun_panel}}"
+                },
+                {
+                  "key": "email",
+                  "value": "{{email_personel}}",
+                  "disabled": true
+                }
+              ]
+            },
+            "url": "{{base_url}}/admin/guide-driver/{{personel_id}}"
+          }
+        },
+        {
+          "name": "Hapus Personel (DELETE) [UBAH DATA]",
+          "request": {
+            "method": "DELETE",
+            "url": "{{base_url}}/admin/guide-driver/{{personel_id}}"
+          }
+        },
+        {
+          "name": "Kalender Trip (GET)",
+          "request": {
+            "method": "GET",
+            "url": "{{base_url}}/admin/kalender-trip"
+          }
+        },
+        {
+          "name": "Manifest Trip (GET)",
+          "request": {
+            "method": "GET",
+            "url": "{{base_url}}/admin/kalender-trip/manifest"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Konten Website",
+      "item": [
+        {
+          "name": "Daftar Artikel (GET)",
+          "request": {
+            "method": "GET",
+            "url": "{{base_url}}/admin/artikel"
+          }
+        },
+        {
+          "name": "Form Buat Artikel (GET)",
+          "request": {
+            "method": "GET",
+            "url": "{{base_url}}/admin/artikel/buat"
+          }
+        },
+        {
+          "name": "Form Ubah Artikel (GET)",
+          "request": {
+            "method": "GET",
+            "url": "{{base_url}}/admin/artikel/{{artikel_id}}/ubah"
+          }
+        },
+        {
+          "name": "Simpan Artikel Baru (POST) [UBAH DATA]",
+          "request": {
+            "method": "POST",
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "key": "judul",
+                  "value": "{{artikel_judul}}"
+                },
+                {
+                  "key": "kategori",
+                  "value": "{{artikel_kategori}}"
+                },
+                {
+                  "key": "ringkasan",
+                  "value": "{{artikel_ringkasan}}"
+                },
+                {
+                  "key": "isi",
+                  "value": "{{artikel_isi}}"
+                },
+                {
+                  "key": "aksi",
+                  "value": "{{artikel_aksi}}"
+                }
+              ]
+            },
+            "url": "{{base_url}}/admin/artikel"
+          }
+        },
+        {
+          "name": "Perbarui Artikel (PUT) [UBAH DATA]",
+          "request": {
+            "method": "POST",
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "key": "_method",
+                  "value": "PUT"
+                },
+                {
+                  "key": "judul",
+                  "value": "{{artikel_judul}}"
+                },
+                {
+                  "key": "kategori",
+                  "value": "{{artikel_kategori}}"
+                },
+                {
+                  "key": "ringkasan",
+                  "value": "{{artikel_ringkasan}}"
+                },
+                {
+                  "key": "isi",
+                  "value": "{{artikel_isi}}"
+                },
+                {
+                  "key": "aksi",
+                  "value": "{{artikel_aksi}}"
+                }
+              ]
+            },
+            "url": "{{base_url}}/admin/artikel/{{artikel_id}}"
+          }
+        },
+        {
+          "name": "Hapus Artikel (DELETE) [UBAH DATA]",
+          "request": {
+            "method": "DELETE",
+            "url": "{{base_url}}/admin/artikel/{{artikel_id}}"
+          }
+        },
+        {
+          "name": "Pulihkan Artikel (PATCH) [UBAH DATA]",
+          "request": {
+            "method": "PATCH",
+            "url": "{{base_url}}/admin/artikel/{{artikel_id}}/pulihkan"
+          }
+        },
+        {
+          "name": "Daftar Ulasan (GET)",
+          "request": {
+            "method": "GET",
+            "url": "{{base_url}}/admin/ulasan"
+          }
+        },
+        {
+          "name": "Setujui Ulasan (PATCH) [UBAH DATA]",
+          "request": {
+            "method": "PATCH",
+            "url": "{{base_url}}/admin/ulasan/{{ulasan_id}}/setujui"
+          }
+        },
+        {
+          "name": "Tolak Ulasan (DELETE) [UBAH DATA]",
+          "request": {
+            "method": "DELETE",
+            "url": "{{base_url}}/admin/ulasan/{{ulasan_id}}"
+          }
+        },
+        {
+          "name": "Pulihkan Ulasan (PATCH) [UBAH DATA]",
+          "request": {
+            "method": "PATCH",
+            "url": "{{base_url}}/admin/ulasan/{{ulasan_id}}/pulihkan"
+          }
+        },
+        {
+          "name": "Unggah Video Ulasan (POST) [UBAH DATA, multi-part]",
+          "request": {
+            "method": "POST",
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "video",
+                  "type": "file",
+                  "src": [],
+                  "description": "mp4/mov, maks sesuai batas_video_mb"
+                }
+              ]
+            },
+            "url": "{{base_url}}/admin/ulasan/{{ulasan_id}}/video"
+          }
+        },
+        {
+          "name": "Hapus Video Ulasan (DELETE) [UBAH DATA]",
+          "request": {
+            "method": "DELETE",
+            "url": "{{base_url}}/admin/ulasan/{{ulasan_id}}/video"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Pengaturan & Profil",
+      "item": [
+        {
+          "name": "Pengaturan (GET)",
+          "request": {
+            "method": "GET",
+            "url": "{{base_url}}/admin/pengaturan"
+          }
+        },
+        {
+          "name": "Perbarui Pengaturan (PUT) [UBAH DATA]",
+          "request": {
+            "method": "POST",
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "key": "_method",
+                  "value": "PUT"
+                },
+                {
+                  "key": "nomor_whatsapp_admin",
+                  "value": "{{nomor_wa_admin}}"
+                },
+                {
+                  "key": "persen_charge_ganti_jadwal",
+                  "value": "{{persen_charge}}"
+                },
+                {
+                  "key": "batas_bayar_hari",
+                  "value": "{{batas_bayar}}"
+                },
+                {
+                  "key": "kuota_default",
+                  "value": "{{kuota_default}}"
+                },
+                {
+                  "key": "batas_ulasan_hari",
+                  "value": "{{batas_ulasan}}"
+                },
+                {
+                  "key": "batas_video_mb",
+                  "value": "{{batas_video_mb}}"
+                }
+              ]
+            },
+            "url": "{{base_url}}/admin/pengaturan"
+          }
+        },
+        {
+          "name": "Profil (GET)",
+          "request": {
+            "method": "GET",
+            "url": "{{base_url}}/admin/profil"
+          }
+        },
+        {
+          "name": "Perbarui Profil (PUT) [UBAH DATA]",
+          "request": {
+            "method": "POST",
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "_method",
+                  "value": "PUT",
+                  "type": "text"
+                },
+                {
+                  "key": "name",
+                  "value": "{{nama_profil}}",
+                  "type": "text"
+                },
+                {
+                  "key": "jabatan",
+                  "value": "{{jabatan_profil}}",
+                  "type": "text"
+                },
+                {
+                  "key": "password",
+                  "value": "{{sandi_profil}}",
+                  "type": "text",
+                  "disabled": true
+                },
+                {
+                  "key": "password_confirmation",
+                  "value": "{{sandi_profil}}",
+                  "type": "text",
+                  "disabled": true
+                },
+                {
+                  "key": "foto",
+                  "type": "file",
+                  "src": []
+                }
+              ]
+            },
+            "url": "{{base_url}}/admin/profil"
+          }
+        },
+        {
+          "name": "Katalog Komponen (GET, local only)",
+          "request": {
+            "method": "GET",
+            "url": "{{base_url}}/admin/_katalog-komponen"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Panel Personel",
+      "item": [
+        {
+          "name": "Halaman Masuk Personel (GET)",
+          "request": {
+            "method": "GET",
+            "url": "{{base_url}}/personel/masuk"
+          }
+        },
+        {
+          "name": "Proses Masuk Personel (POST)",
+          "request": {
+            "method": "POST",
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "key": "email",
+                  "value": "{{email_personel}}"
+                },
+                {
+                  "key": "password",
+                  "value": "{{admin_password}}"
+                }
+              ]
+            },
+            "url": "{{base_url}}/personel/masuk"
+          }
+        },
+        {
+          "name": "Dashboard Personel (GET)",
+          "request": {
+            "method": "GET",
+            "url": "{{base_url}}/personel"
+          }
+        },
+        {
+          "name": "Tanggapi Pesanan (POST) [UBAH DATA]",
+          "request": {
+            "method": "POST",
+            "url": "{{base_url}}/personel/pesanan/{{pesanan_id}}/tanggapi"
+          }
+        },
+        {
+          "name": "Trip Selesai (POST) [UBAH DATA]",
+          "request": {
+            "method": "POST",
+            "url": "{{base_url}}/personel/pesanan/{{pesanan_id}}/trip-selesai"
+          }
+        },
+        {
+          "name": "Keluar Personel (POST)",
+          "request": {
+            "method": "POST",
+            "url": "{{base_url}}/personel/keluar"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Debug",
+      "item": [
+        {
+          "name": "Pesanan JSON (GET)",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{base_url}}/debug/pesanan/{{pesanan_id}}"
+          }
+        }
+      ]
+    }
+  ]
+}

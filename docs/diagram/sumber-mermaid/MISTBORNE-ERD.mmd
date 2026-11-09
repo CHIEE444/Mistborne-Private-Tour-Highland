@@ -1,0 +1,112 @@
+erDiagram
+    users {
+        bigint id PK
+        varchar(255) email UK
+    }
+    perjalanan {
+        bigint id PK
+        varchar(255) nama UK
+        varchar(255) slug UK
+        bigint kendaraan_id FK
+    }
+    jadwal_keberangkatan {
+        bigint id PK
+        bigint perjalanan_id FK, UK
+        date tanggal UK
+    }
+    hotel {
+        bigint id PK
+        varchar(190) slug UK
+    }
+    hotel_perjalanan {
+        bigint id PK
+        bigint hotel_id FK, UK
+        bigint perjalanan_id UK, FK
+    }
+    kendaraan {
+        bigint id PK
+    }
+    servis_kendaraan {
+        bigint id PK
+        bigint kendaraan_id FK
+    }
+    personel_operasional {
+        bigint id PK
+        bigint user_id FK, UK
+    }
+    aktivitas_personel {
+        bigint id PK
+        bigint personel_id FK
+        bigint pesanan_id FK
+    }
+    permintaan_pesanan {
+        bigint id PK
+        varchar(80) token UK
+        bigint perjalanan_id FK
+        bigint pesanan_id FK, UK
+        uuid token_booking UK
+        bigint user_web_id FK
+    }
+    pesanan {
+        bigint id PK
+        varchar(255) kode UK
+        bigint perjalanan_id FK
+        varchar(255) token_rating UK
+        bigint guide_personel_id FK
+        uuid token_booking UK
+        bigint kendaraan_id FK
+        bigint hotel_id FK
+    }
+    penggantian_jadwal {
+        bigint id PK
+        bigint pesanan_id FK
+    }
+    pesanan_kustom {
+        bigint id PK
+        bigint pesanan_id FK, UK
+    }
+    riwayat_penawaran_pesanan_kustom {
+        bigint id PK
+        bigint pesanan_kustom_id FK, UK
+        bigint user_id FK
+        smallint versi UK
+    }
+    ulasan {
+        bigint id PK
+        bigint pesanan_id FK, UK
+    }
+    pertanyaan_tamu {
+        bigint id PK
+        bigint permintaan_pesanan_id FK
+    }
+    artikel {
+        bigint id PK
+        varchar(255) slug UK
+    }
+    pengaturan {
+        bigint id PK
+    }
+    notifications {
+        uuid id PK
+    }
+    kendaraan |o--o{ perjalanan : "kendaraan_id"
+    perjalanan ||--o{ jadwal_keberangkatan : "perjalanan_id"
+    hotel ||--o{ hotel_perjalanan : "hotel_id"
+    perjalanan ||--o{ hotel_perjalanan : "perjalanan_id"
+    kendaraan ||--o{ servis_kendaraan : "kendaraan_id"
+    users |o--o| personel_operasional : "user_id"
+    personel_operasional ||--o{ aktivitas_personel : "personel_id"
+    pesanan |o--o{ aktivitas_personel : "pesanan_id"
+    perjalanan |o--o{ permintaan_pesanan : "perjalanan_id"
+    pesanan |o--o| permintaan_pesanan : "pesanan_id"
+    users |o--o{ permintaan_pesanan : "user_web_id"
+    perjalanan ||--o{ pesanan : "perjalanan_id"
+    personel_operasional |o--o{ pesanan : "guide_personel_id"
+    kendaraan |o--o{ pesanan : "kendaraan_id"
+    hotel |o--o{ pesanan : "hotel_id"
+    pesanan ||--o{ penggantian_jadwal : "pesanan_id"
+    pesanan |o--o| pesanan_kustom : "pesanan_id"
+    pesanan_kustom ||--o{ riwayat_penawaran_pesanan_kustom : "pesanan_kustom_id"
+    users |o--o{ riwayat_penawaran_pesanan_kustom : "user_id"
+    pesanan ||--o| ulasan : "pesanan_id"
+    permintaan_pesanan |o--o{ pertanyaan_tamu : "permintaan_pesanan_id"

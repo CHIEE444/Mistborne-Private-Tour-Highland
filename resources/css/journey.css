@@ -1,0 +1,50 @@
+/* ===== Kartu journey (poster) dan modal detail: stretched link, judul title-case, tombol favorit, timeline itinerary ===== */
+:root {
+    --jc-font: var(--font-sans, 'Montserrat', system-ui, sans-serif);
+    --jc-ink: #1a2820;
+    --jc-muted: #5c635a;
+    --jc-label: #6f766c;
+    --jc-line: #c9ccc4;
+    --jc-cream: #f6f1e4;
+    --jc-gold-soft: #d9c28f;
+    --jc-gold: #b8955a;
+    --jc-gold-deep: #96763a;
+    --jc-bg: #f6f7f3;
+    --jc-modal-bg: #fbfbf8;
+    --jc-radius: 2px;
+    --jc-fav-pop: .3s ease-out;
+}
+
+/* ================= KARTU (poster) ================= */
+.jc-card {
+    font-family: var(--jc-font);
+    transition: none;
+}
+
+/* Judul: title case via CSS (data tersimpan UPPERCASE), teks mentah tetap utuh */
+.jc-ttr {
+    text-transform: lowercase;
+}
+
+/* Foto zoom halus saat hover kartu (img di Blade punya transition utilities) */
+.jc-card__img {
+    transition: transform .3s ease-out;
+}
+
+.jc-card:hover .jc-card__img {
+    transform: scale(1.03);
+}
+
+/* LOVE: stroke cream, tanpa latar; aktif fill emas;
+
+/* Panel kanan: kolom fleks;
+
+/* Reduced motion: matikan zoom/panah/pop */
+@media (prefers-reduced-motion: reduce) {
+    .jc-card__img,
+    .jc-card:hover .jc-card__img {
+        transform: none;
+        animation: none;
+        transition: none;
+    }
+}

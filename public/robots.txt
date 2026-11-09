@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+
+# TODO: ganti GANTI-DOMAIN dengan domain produksi sebelum online
+Sitemap: https://GANTI-DOMAIN/sitemap.xml

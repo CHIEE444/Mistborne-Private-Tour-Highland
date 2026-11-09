@@ -1,0 +1,48 @@
+flowchart TD
+    subgraph TAMU["Tamu (website publik)"]
+        mulai((Mulai)) --> t1[Buka website dan pilih journey]
+        t1 --> t2[Isi formulir booking]
+        t3[Membayar uang muka atau lunas]
+        t4[Memberi rating dan ulasan]
+    end
+    subgraph SISTEM["Sistem MISTBORNE"]
+        s1{Isian valid?}
+        s2[Simpan Permintaan Pesanan, kirim notifikasi admin, buka WhatsApp]
+        s3{Pembayaran minimal 30 persen?}
+        s4{Tenggat 3 hari lewat dan belum bayar?}
+        s5[Batal otomatis, kuota dibebaskan]
+        s6[Status menjadi Payment]
+        s7[Kirim email penugasan ke guide]
+        s8{Syarat Completed terpenuhi?}
+        s9[Ulasan tampil di testimoni beranda]
+        selesai((Selesai))
+    end
+    subgraph ADMIN["Admin (admin panel)"]
+        a1[Tinjau permintaan dan cek kuota tanggal]
+        a2{Tamu sepakat?}
+        a3[Tutup sebagai Tidak jadi]
+        a4[Deal - Buat Pesanan, status Dihubungi]
+        a5[Konfirmasi Pesanan, tenggat bayar dimulai]
+        a6[Catat pembayaran]
+        a7[Tugaskan guide dan kendaraan]
+        a8[Urus hotel 8 langkah dan catat pelunasan]
+        a9[Tandai Completed]
+        a10[Setujui ulasan]
+    end
+    subgraph GUIDE["Guide (panel guide)"]
+        g1{Terima tugas?}
+        g2[Menjalankan trip lalu menandai Trip sudah selesai]
+    end
+    t2 --> s1
+    s1 -- tidak --> t2
+    s1 -- ya --> s2 --> a1 --> a2
+    a2 -- tidak --> a3 --> selesai
+    a2 -- ya --> a4 --> a5 --> t3 --> a6 --> s3
+    s3 -- belum --> s4
+    s4 -- ya --> s5 --> selesai
+    s4 -- tidak --> t3
+    s3 -- ya --> s6 --> a7 --> s7 --> g1
+    g1 -- tolak --> a7
+    g1 -- terima --> a8 --> g2 --> s8
+    s8 -- belum --> a8
+    s8 -- ya --> a9 --> t4 --> a10 --> s9 --> selesai

@@ -1,0 +1,19 @@
+@import 'tailwindcss';
+
+@plugin '@tailwindcss/forms';
+
+@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
+@source '../../storage/framework/views/*.php';
+/* tests/ dan docs/ hanya mengutip nama class, jadi tidak dipindai. */
+@source not '../../tests';
+@source not '../../docs';
+
+@import './base.css';
+/* Font ikon dimuat lewat CSS (bukan JS) agar nama ikon tidak sempat tampil sebagai teks. */
+@import './ikon.css';
+@import './theme.css';
+@import './motion.css';
+@import './glass.css';
+@import './journey.css';
+@import './stats.css';
+@import './formulir.css';

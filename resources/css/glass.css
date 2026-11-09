@@ -1,0 +1,121 @@
+/* Lapis kaca navbar: fallback @supports dan prefers-reduced-transparency */
+/* ===== Navbar kaca: dua kondisi (di atas foto hero dan setelah di-scroll), kontras teks ≥ 4.5:1 ===== */
+.navbar-glass {
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    border-radius: inherit; /* ikut container floating rounded-[24px] */
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.18),
+        0 12px 32px -16px rgba(0, 0, 0, 0.25);
+    -webkit-backdrop-filter: blur(20px) saturate(150%);
+    backdrop-filter: blur(20px) saturate(150%);
+    transition: background-color 0.4s ease, border-color 0.4s ease;
+}
+.navbar-glass-scrolled {
+    background-color: rgba(18, 48, 31, 0.55);
+    border-bottom-color: rgba(255, 255, 255, 0.15);
+}
+/* Beranda: opacity lapis kaca diatur Alpine mengikuti scroll (0 = bening di atas foto, 1 = kaca penuh); transisi pendek
+   hanya menghaluskan sisa lompatan antar-event scroll. */
+.navbar-glass-pudar { transition: opacity 0.18s linear; will-change: opacity; }
+
+/* Tombol ikon kaca (bahasa & lonceng & hamburger): putih transparan + border tipis.
+   Tombol "Masuk" TETAP solid hijau tua (di Blade) agar jadi titik fokus. */
+.nav-icon-glass {
+    background-color: rgba(255, 255, 255, 0.14);
+    border: 1px solid rgba(255, 255, 255, 0.28);
+    -webkit-backdrop-filter: blur(14px);
+    backdrop-filter: blur(14px);
+    transition: background-color 0.25s ease, border-color 0.25s ease;
+}
+.nav-icon-glass:hover {
+    background-color: rgba(255, 255, 255, 0.24);
+    border-color: rgba(255, 255, 255, 0.45);
+}
+
+/* Panel pilihan bahasa: kaca bening keabu-abuan (tanpa hijau) dengan kilau tipis di tepi atas */
+.kaca-bahasa {
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.16), rgba(255, 255, 255, 0.05)), rgba(14, 22, 28, 0.42);
+    border: 1px solid rgba(255, 255, 255, 0.22);
+    -webkit-backdrop-filter: blur(22px) saturate(160%);
+    backdrop-filter: blur(22px) saturate(160%);
+    box-shadow: 0 18px 44px -14px rgba(0, 0, 0, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.18);
+}
+
+/* Fallback browser tanpa backdrop-filter: navbar jauh lebih pekat (tetap kaca terang di top) */
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+    .navbar-glass-scrolled {
+        background-color: rgba(18, 48, 31, 0.92);
+    }
+}
+
+/* Pengguna memilih mengurangi transparansi OS: lapis solid penuh */
+@media (prefers-reduced-transparency: reduce) {
+    .navbar-glass,
+    [data-nav-glass] {
+        backdrop-filter: none;
+        -webkit-backdrop-filter: none;
+    }
+    .navbar-glass-scrolled {
+        background-color: rgb(18, 48, 31);
+    }
+}
+
+/* ===== Utilitas kaca bersama (panel Paket Wisata, kartu peta footer, navbar) ===== */
+@utility glass-panel {
+    background-color: rgba(14, 31, 21, 0.62);
+    backdrop-filter: blur(24px) saturate(150%) brightness(0.62);
+    -webkit-backdrop-filter: blur(24px) saturate(150%) brightness(0.62);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.25),
+        0 8px 32px -12px rgba(0, 0, 0, 0.45);
+}
+
+/* Varian lebih pekat untuk panel kaca di atas latar HALAMAN TERANG (krem #F7F8F4),
+   bukan di atas foto: tanpa ini teks putih hanya ~3.4:1 di atas krem.
+   [PERMINTAAN USER: kartu "Private Trip..." dibuat kaca juga] */
+@utility glass-panel-deep {
+    background-color: rgba(14, 31, 21, 0.85);
+    backdrop-filter: blur(24px) saturate(150%) brightness(0.6);
+    -webkit-backdrop-filter: blur(24px) saturate(150%) brightness(0.6);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.22),
+        0 8px 32px -12px rgba(0, 0, 0, 0.45);
+}
+
+/* Safari lama: prefix -webkit- untuk backdrop-filter (Tailwind v4 menghasilkannya otomatis
+   untuk utility backdrop-*; verifikasi ada di hasil build). */
+
+/* ===== Tombol kembali (ke Beranda / ke halaman sebelumnya): SATU gaya kaca di semua halaman publik =====
+   Kaca putih bening dengan garis tipis hijau tua: terbaca di latar terang maupun di atas foto sampul. */
+.tombol-kaca {
+    background: rgba(255, 255, 255, 0.58);
+    border: 1px solid rgba(255, 255, 255, 0.8);
+    box-shadow:
+        0 0 0 1px rgba(18, 48, 31, 0.12),
+        inset 0 1px 0 rgba(255, 255, 255, 0.9),
+        0 12px 28px -16px rgba(18, 48, 31, 0.5);
+    -webkit-backdrop-filter: blur(16px) saturate(150%);
+    backdrop-filter: blur(16px) saturate(150%);
+    color: #12301f;
+    transition: background-color 0.2s ease, box-shadow 0.2s ease;
+}
+.tombol-kaca:hover {
+    background: rgba(255, 255, 255, 0.86);
+    box-shadow:
+        0 0 0 1px rgba(18, 48, 31, 0.28),
+        inset 0 1px 0 rgba(255, 255, 255, 0.9),
+        0 16px 32px -16px rgba(18, 48, 31, 0.55);
+}
+.tombol-kaca:focus-visible {
+    outline: 2px solid #1d7a56;
+    outline-offset: 2px;
+}
+@media (prefers-reduced-transparency: reduce) {
+    .tombol-kaca {
+        background: #fff;
+        -webkit-backdrop-filter: none;
+        backdrop-filter: none;
+    }
+}

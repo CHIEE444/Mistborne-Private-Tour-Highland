@@ -1,0 +1,197 @@
+/* Lapisan dasar browser: border, kursor, x-cloak, fokus terlihat, tipografi non-Latin */
+@layer base {
+    /* Kolom grid bawaan boleh menyusut: tanpa ini isi lebar (input tanggal, tabel, chip) melebarkan satu halaman di layar sempit */
+    .grid {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    /* v4: border default = currentColor; samakan dengan v3 (abu-abu) */
+    *,
+    ::after,
+    ::before,
+    ::backdrop,
+    ::file-selector-button {
+        border-color: var(--color-gray-200, currentColor);
+    }
+
+    /* v4: tombol tidak lagi cursor-pointer */
+    button:not(:disabled),
+    [role='button']:not(:disabled) {
+        cursor: pointer;
+    }
+
+    [x-cloak] {
+        display: none !important;
+    }
+
+    html {
+        font-family: var(--font-sans);
+        scroll-behavior: smooth;
+        color-scheme: light;
+        accent-color: #c5a059;
+        -webkit-tap-highlight-color: transparent;
+        text-rendering: optimizeLegibility;
+    }
+
+    body {
+        font-synthesis: none;
+    }
+
+    :where(a, button, input, select, textarea, [tabindex]):focus-visible {
+        outline: 2px solid #c5a059;
+        outline-offset: 2px;
+    }
+
+    /* ===== Tipografi non-Latin: tanpa tracking negatif, pemenggalan CJK ===== */
+    :lang(zh),
+    :lang(ja),
+    :lang(ko) {
+        letter-spacing: 0 !important;
+    }
+    :lang(ko) {
+        word-break: keep-all;
+    }
+    :lang(ja),
+    :lang(zh) {
+        line-break: strict;
+    }
+
+    /* Placeholder terbaca di atas latar input #F0F2EC (kontras >= 4.5:1) */
+    ::placeholder {
+        color: #55645a;
+        opacity: 1;
+    }
+
+    /* ===== Dropdown native tanpa panah bawaan (chevron kustom ada di Blade) ===== */
+    select {
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        appearance: none;
+        background-image: none;
+        color-scheme: light;
+    }
+
+    /* Opsi dropdown: teks gelap di atas latar terang (beberapa browser mewarisi warna terbalik) */
+    select option {
+        color: #14231b;
+        background-color: #ffffff;
+    }
+
+    /* ===== Tipografi Arab: tanpa letter-spacing/uppercase agar huruf tetap bersambung ===== */
+    :lang(ar) {
+        letter-spacing: 0 !important;
+        text-transform: none !important;
+        word-break: normal;
+        line-height: 1.75;
+    }
+    /* Isi LTR (harga, telepon, email, nama Latin) tetap lurus di tengah teks RTL */
+    bdi,
+    [dir='ltr'] {
+        unicode-bidi: isolate;
+    }
+}
+
+/* Cegah kilatan nama ligature ikon sebelum font termuat (Tahap 6, Bagian 5.3):
+   kotak dikunci 1em dan isi terpotong sampai glyph siap. Specificity 2 kelas
+   agar menang atas CSS paket material-symbols yang tidak berlayer. */
+span.material-symbols-outlined.material-symbols-outlined {
+    display: inline-block;
+    width: 1em;
+    height: 1em;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+/* Gaya badan artikel publik (.isi-artikel): menampilkan hasil editor admin — tebal, miring,
+   coret, judul, kutipan, daftar, kode, dan tautan — karena reset Tailwind menghapus gayanya. */
+@layer components {
+    .isi-artikel { font-size: 17px; line-height: 1.85; color: #2F3B35; overflow-wrap: anywhere; }
+    .isi-artikel > * + * { margin-top: 1.25em; }
+    .isi-artikel strong, .isi-artikel b { font-weight: 700; color: #14272B; }
+    .isi-artikel em, .isi-artikel i { font-style: italic; }
+    .isi-artikel del, .isi-artikel s { text-decoration: line-through; opacity: .7; }
+    .isi-artikel h2 { margin-top: 2em; font-family: var(--font-serif, serif); font-size: 1.6em; font-weight: 600; line-height: 1.3; color: #12301F; }
+    .isi-artikel h3 { margin-top: 1.8em; font-size: 1.25em; font-weight: 600; color: #12301F; }
+    .isi-artikel a { color: #1D7A56; text-decoration: underline; text-underline-offset: 3px; }
+    .isi-artikel a:hover { color: #12301F; }
+    .isi-artikel ul { list-style: disc; padding-inline-start: 1.5em; }
+    .isi-artikel ol { list-style: decimal; padding-inline-start: 1.5em; }
+    .isi-artikel li + li { margin-top: .4em; }
+    .isi-artikel blockquote { border-inline-start: 3px solid #1D7A56; padding-inline-start: 1.1em; font-style: italic; color: #486553; }
+    .isi-artikel pre, .isi-artikel code { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: .9em; }
+    .isi-artikel pre { overflow-x: auto; border-radius: 12px; background: #F1F5EF; padding: 1em 1.2em; white-space: pre-wrap; }
+}
+
+/* Hero beranda (di luar @layer agar menang dari utility): judul baris kedua memudar. */
+.hero-judul-pudar {
+    background: linear-gradient(180deg, #fff 28%, rgba(255, 255, 255, .38) 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    text-shadow: none;
+    padding-bottom: .1em;
+}
+
+/* Tombol & kapsul kaca bening di hero: transparan, blur latar, tepi tipis berkilau. */
+.hero-kaca {
+    background: rgba(255, 255, 255, .12);
+    border: 1px solid rgba(255, 255, 255, .32);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, .25), 0 10px 30px -18px rgba(0, 0, 0, .45);
+    -webkit-backdrop-filter: blur(14px) saturate(140%);
+    backdrop-filter: blur(14px) saturate(140%);
+    transition: background-color .25s ease, border-color .25s ease;
+}
+.hero-kaca:hover { background: rgba(255, 255, 255, .22); border-color: rgba(255, 255, 255, .5); }
+
+/* Tombol utama hero: kaca bening bersentuhan putih (rona putih tipis + tepi putih), teks putih; lingkaran panah putih jadi aksen. */
+.hero-kaca-putih {
+    background: linear-gradient(180deg, rgba(255, 255, 255, .3), rgba(255, 255, 255, .14));
+    border: 1px solid rgba(255, 255, 255, .6);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, .5), 0 14px 34px -18px rgba(0, 0, 0, .5);
+    -webkit-backdrop-filter: blur(16px) saturate(150%);
+    backdrop-filter: blur(16px) saturate(150%);
+    transition: background-color .25s ease, border-color .25s ease;
+}
+.hero-kaca-putih:hover { background: linear-gradient(180deg, rgba(255, 255, 255, .4), rgba(255, 255, 255, .22)); border-color: rgba(255, 255, 255, .8); }
+
+/* Animasi muncul untuk blok berisi tombol kaca: hanya opacity + geser. Tanpa `filter`, karena filter (walau blur(0)) yang
+   tertinggal di elemen induk mematikan backdrop-filter tombol kaca di dalamnya. */
+@keyframes hero-muncul {
+    from { opacity: 0; transform: translate3d(0, 24px, 0); }
+    to { opacity: 1; transform: none; }
+}
+.hero-muncul { animation: hero-muncul .9s cubic-bezier(.22, 1, .36, 1) backwards; animation-delay: var(--d, 0ms); }
+@media (prefers-reduced-motion: reduce) {
+    .hero-muncul { animation: none; }
+}
+
+/* Paket Relaksasi Alam (panel melebar). Desktop: panel aktif melebar (flex-grow) dan detailnya memudar masuk setelah
+   panel terbuka; panel ramping menampilkan nama vertikal. Di bawah lg: panel bertumpuk, semuanya terbuka.
+   Tanpa JS, panel pertama dianggap aktif. */
+.pk-panel { height: 460px; }
+.pk-foto { transition: transform 1.1s cubic-bezier(.22, 1, .36, 1); }
+.pk-detail { width: auto; }
+.pk-nama-tegak { left: 1.4rem; bottom: 1.75rem; writing-mode: vertical-rl; transform: rotate(180deg); transition: opacity .3s ease; }
+/* Posisi fisik (bukan logis): pada teks vertikal, inset-inline mengikuti arah tulis teks itu sendiri, bukan halaman. */
+[dir='rtl'] .pk-nama-tegak { left: auto; right: 1.4rem; }
+/* Kapsul kaca di atas foto paket: sedikit lebih gelap dari kaca hero agar tetap terbaca di foto terang. */
+.pk-kaca {
+    background: rgba(12, 22, 18, .34);
+    border: 1px solid rgba(255, 255, 255, .3);
+    -webkit-backdrop-filter: blur(12px) saturate(140%);
+    backdrop-filter: blur(12px) saturate(140%);
+}
+@media (min-width: 1024px) {
+    .pk-deret { height: clamp(480px, 40vw, 580px); }
+    .pk-panel { height: auto; flex: 1 1 0; min-width: 0; transition: flex-grow .75s cubic-bezier(.22, 1, .36, 1); }
+    .pk-panel.is-aktif, html:not(.js) .pk-panel:first-child { flex-grow: 3.4; }
+    .pk-foto { transform: scale(1.08); }
+    .pk-panel.is-aktif .pk-foto, html:not(.js) .pk-panel:first-child .pk-foto { transform: none; }
+    .pk-detail { width: min(560px, calc(100% - 3.5rem)); opacity: 0; transform: translate3d(0, 14px, 0); pointer-events: none; transition: opacity .3s ease, transform .5s cubic-bezier(.22, 1, .36, 1); }
+    .pk-panel.is-aktif .pk-detail, html:not(.js) .pk-panel:first-child .pk-detail { opacity: 1; transform: none; pointer-events: auto; transition-delay: .28s; }
+    .pk-panel.is-aktif .pk-nama-tegak, html:not(.js) .pk-panel:first-child .pk-nama-tegak { opacity: 0; }
+    .pk-panel.is-aktif .pk-pemicu { pointer-events: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+    .pk-panel, .pk-foto, .pk-detail, .pk-nama-tegak { transition: none; }
+}

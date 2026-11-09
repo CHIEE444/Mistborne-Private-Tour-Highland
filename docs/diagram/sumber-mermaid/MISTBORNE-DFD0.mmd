@@ -1,0 +1,18 @@
+flowchart LR
+    tamu[Tamu]
+    admin[Admin]
+    guide[Guide]
+    wa[WhatsApp]
+    smtp[Gmail SMTP]
+    google[Google Places API]
+    sistem((0<br/>Sistem MISTBORNE))
+    tamu -- "booking, trip kustom, pertanyaan, rating dan ulasan" --> sistem
+    sistem -- "info journey dan harga, tautan formulir, tautan rating" --> tamu
+    admin -- "data katalog, keputusan pesanan, pembayaran, penawaran, persetujuan ulasan" --> sistem
+    sistem -- "notifikasi, dashboard, daftar pesanan, manifest" --> admin
+    guide -- "terima atau tolak tugas, trip selesai" --> sistem
+    sistem -- "daftar tugas" --> guide
+    sistem -- "draf pesan WhatsApp" --> wa
+    sistem -- "email penugasan dan reset sandi" --> smtp
+    smtp -- "email" --> guide
+    google -- "rating hotel" --> sistem

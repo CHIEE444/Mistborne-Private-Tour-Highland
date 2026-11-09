@@ -1,0 +1,457 @@
+/*
+ * Gaya kecil yang tidak praktis sebagai utility Tailwind murni (transisi, scrollbar).
+ * Markup/layout tetap pakai utility class di Blade — file ini sengaja kecil.
+ */
+
+/* [x-cloak] disembunyikan sebelum Alpine aktif, untuk semua komponen admin. */
+[x-cloak] {
+    display: none !important;
+}
+
+.admin-modal-sedang-loading [x-show] {
+    transition: none !important;
+}
+
+body.admin-sedang-memproses .admin-dialog-aksi {
+    display: none !important;
+}
+
+
+/* ── Sidebar rail melayang (referensi dashboard sage): ikon bulat, melebar mulus saat disentuh kursor ── */
+.rail {
+    --rail-ease: cubic-bezier(0.22, 1, 0.36, 1);
+    position: fixed;
+    inset-block: 12px;
+    inset-inline-start: 12px;
+    z-index: 50;
+    display: flex;
+    width: 256px;
+    flex-direction: column;
+    overflow: hidden;
+    border-radius: 28px;
+    background: #fff;
+    box-shadow: 0 1px 2px rgba(20, 25, 22, 0.05), 0 18px 40px -18px rgba(20, 25, 22, 0.28);
+    transform: translateX(calc(-100% - 24px));
+    transition: transform 0.45s var(--rail-ease), width 0.6s var(--rail-ease), box-shadow 0.4s ease;
+}
+
+[dir='rtl'] .rail {
+    transform: translateX(calc(100% + 24px));
+}
+
+.rail.rail-terbuka {
+    transform: none;
+}
+
+.rail-nav {
+    flex: 1;
+    overflow-x: hidden;
+    overflow-y: auto;
+    scrollbar-width: none;
+}
+
+.rail-nav::-webkit-scrollbar {
+    display: none;
+}
+
+.rail-profil {
+    padding: 14px 10px 6px;
+}
+
+.rail-avatar {
+    position: relative;
+    width: 60px;
+    height: 60px;
+    margin-inline: auto;
+    transition: width 0.6s var(--rail-ease), height 0.6s var(--rail-ease), margin 0.6s var(--rail-ease);
+}
+
+.rail-avatar-bulat {
+    display: grid;
+    width: 100%;
+    height: 100%;
+    place-items: center;
+    overflow: hidden;
+    border-radius: 9999px;
+    background: #F3B6AE;
+    color: #7A2E27;
+    font-weight: 700;
+    font-size: 1.15rem;
+}
+
+.rail-avatar-bulat img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.rail-avatar-aksi {
+    position: absolute;
+    inset-block-end: 0;
+    inset-inline-end: 0;
+    display: grid;
+    width: 24px;
+    height: 24px;
+    place-items: center;
+    border: 2px solid #fff;
+    border-radius: 9999px;
+    background: var(--color-sage-tua);
+    color: #fff;
+    transition: opacity 0.3s ease, transform 0.4s var(--rail-ease);
+}
+
+.rail-avatar-aksi .material-symbols-outlined {
+    font-size: 13px;
+}
+
+.rail-profil-teks {
+    overflow: hidden;
+    text-align: center;
+    max-height: 60px;
+    transition: max-height 0.55s var(--rail-ease), opacity 0.3s ease, margin 0.55s var(--rail-ease);
+    margin-top: 8px;
+}
+
+.rail-garis {
+    height: 1px;
+    margin: 4px 14px 2px;
+    background: #ECEBE6;
+}
+
+.rail-grup {
+    overflow: hidden;
+    height: 22px;
+    padding: 6px 16px 0;
+    color: #9AA19B;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    white-space: nowrap;
+    transition: height 0.45s var(--rail-ease), opacity 0.3s ease, padding 0.45s var(--rail-ease);
+}
+
+.rail-item {
+    position: relative;
+    display: flex;
+    width: 100%;
+    height: 38px;
+    align-items: center;
+    gap: 12px;
+    padding-inline: 10px;
+    color: #4A524D;
+    font-size: 13.5px;
+    font-weight: 500;
+    text-align: start;
+    transition: color 0.2s ease;
+}
+
+.rail-ikon {
+    position: relative;
+    display: grid;
+    flex: none;
+    width: 36px;
+    height: 36px;
+    place-items: center;
+    border-radius: 9999px;
+    transition: background-color 0.25s ease, color 0.25s ease, transform 0.35s var(--rail-ease);
+}
+
+.rail-ikon .material-symbols-outlined {
+    font-size: 19px;
+}
+
+.rail-item:hover .rail-ikon,
+.rail-item:focus-visible .rail-ikon {
+    background: var(--color-rail-hover);
+    color: var(--color-sage-tua);
+    transform: scale(1.06);
+}
+
+.rail-item:focus-visible {
+    outline: none;
+}
+
+.rail-item:focus-visible .rail-ikon {
+    box-shadow: 0 0 0 2px #fff, 0 0 0 4px var(--color-sage-tua);
+}
+
+.rail-item[aria-current='page'] {
+    color: var(--color-sage-tua);
+    font-weight: 700;
+}
+
+.rail-item[aria-current='page'] .rail-ikon {
+    background: linear-gradient(160deg, var(--color-sage), var(--color-sage-tua));
+    box-shadow: 0 6px 14px -6px rgba(78, 112, 89, 0.7);
+    color: #fff;
+}
+
+.rail-item--bahaya:hover {
+    color: #C0314A;
+}
+
+.rail-teks {
+    flex: 1;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    transition: opacity 0.25s ease, transform 0.5s var(--rail-ease);
+    transition-delay: calc(var(--i, 0) * 14ms);
+}
+
+.rail-lencana {
+    position: absolute;
+    inset-block-start: 0;
+    inset-inline-start: 24px;
+    display: flex;
+    height: 18px;
+    min-width: 18px;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid #fff;
+    border-radius: 9999px;
+    background: #DC2626;
+    padding-inline: 4px;
+    color: #fff;
+    font-size: 10px;
+    font-weight: 700;
+    line-height: 1;
+}
+
+.rail-bawah {
+    border-top: 1px solid #ECEBE6;
+    padding-block: 4px 8px;
+}
+
+.rail-tautan-profil {
+    position: absolute;
+    inset: 0;
+    border-radius: 9999px;
+}
+
+@media (max-width: 1023px) and (max-height: 880px) {
+    .rail-avatar {
+        width: 48px;
+        height: 48px;
+    }
+}
+
+/* Layar lebar: rail tetap ramping. Nama fitur tidak membuka seluruh sidebar, tetapi muncul sebagai
+   gelembung bicara (popover berpanah) di samping ikon yang disorot — lihat resources/js/admin/gelembung-rail.js. */
+@media (min-width: 1024px) {
+    .rail {
+        width: 56px;
+        transform: none;
+    }
+
+    .rail .rail-avatar {
+        width: 36px;
+        height: 36px;
+        margin-inline: 0;
+    }
+
+    .rail .rail-avatar-bulat {
+        font-size: 0.8rem;
+    }
+
+    .rail .rail-avatar-aksi,
+    .rail .rail-profil-teks {
+        display: none;
+    }
+
+    .rail .rail-grup {
+        height: 4px;
+        padding-top: 0;
+        opacity: 0;
+    }
+
+    /* Label tetap dibaca pembaca layar, tetapi disembunyikan secara visual */
+    .rail .rail-teks {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+    }
+}
+
+/* Gelembung bicara rail: muncul dari ikon dengan panah, meluncur halus saat berpindah ikon */
+.rail-gelembung {
+    position: fixed;
+    z-index: 80;
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+    padding: 8px 14px;
+    border-radius: 14px;
+    background: var(--color-sage-tua);
+    color: #fff;
+    font-size: 13px;
+    font-weight: 600;
+    line-height: 1.3;
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    box-shadow: 0 10px 24px -10px rgba(46, 70, 55, 0.6);
+    transform: translateY(-50%) translateX(-8px) scale(0.9);
+    transform-origin: left center;
+    transition: opacity 0.18s ease, transform 0.35s cubic-bezier(0.22, 1, 0.36, 1), top 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.rail-gelembung::before {
+    position: absolute;
+    top: 50%;
+    left: -4px;
+    width: 12px;
+    height: 12px;
+    border-radius: 2px;
+    background: inherit;
+    content: '';
+    transform: translateY(-50%) rotate(45deg);
+}
+
+.rail-gelembung--tampil {
+    opacity: 1;
+    transform: translateY(-50%);
+}
+
+.rail-gelembung--lompat {
+    transition: opacity 0.18s ease, transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.rail-gelembung-sub {
+    color: rgba(255, 255, 255, 0.75);
+    font-size: 11.5px;
+    font-weight: 500;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .rail-gelembung,
+    .rail,
+    .rail *,
+    .rail *::before {
+        transition-duration: 0.01ms !important;
+        transition-delay: 0s !important;
+    }
+}
+
+/* Editor Trix: toolbar mengikuti lebar kartu, tombolnya turun baris di layar sempit */
+trix-toolbar {
+    display: block;
+    max-width: 100%;
+}
+
+trix-toolbar .trix-button-row {
+    flex-wrap: wrap !important;
+    row-gap: 4px;
+    overflow-x: visible !important;
+}
+
+trix-editor {
+    max-width: 100%;
+}
+
+/* ── Transisi halus antarhalaman (referensi video admin): konten memudar, sidebar & bilah atas diam,
+      penanda menu aktif meluncur ke menu baru, lalu kartu muncul bergiliran dari bawah. ── */
+@view-transition {
+    navigation: auto;
+}
+
+.rail {
+    view-transition-name: rail-admin;
+}
+
+.bilah-atas-admin {
+    view-transition-name: bilah-atas-admin;
+}
+
+.rail-item[aria-current='page'] .rail-ikon {
+    view-transition-name: rail-aktif;
+}
+
+/* Berurutan, bukan bersamaan: halaman lama hilang dulu, baru halaman baru muncul (tanpa teks dobel) */
+::view-transition-old(root) {
+    animation: 120ms ease-in both admin-pudar-keluar;
+}
+
+::view-transition-new(root) {
+    animation: 220ms ease-out 110ms both admin-pudar-masuk;
+}
+
+::view-transition-group(rail-aktif) {
+    animation-duration: 480ms;
+    animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* Sidebar & bilah atas berganti seketika (tanpa bayangan ganda), hanya konten yang memudar */
+::view-transition-old(rail-admin),
+::view-transition-old(bilah-atas-admin) {
+    display: none;
+}
+
+::view-transition-new(rail-admin),
+::view-transition-new(bilah-atas-admin) {
+    animation: none;
+}
+
+@keyframes admin-pudar-keluar {
+    to {
+        opacity: 0;
+    }
+}
+
+@keyframes admin-pudar-masuk {
+    from {
+        opacity: 0;
+    }
+}
+
+@keyframes admin-naik-masuk {
+    from {
+        opacity: 0;
+        transform: translateY(14px);
+    }
+
+    to {
+        opacity: 1;
+        transform: none;
+    }
+}
+
+.konten-admin > * {
+    animation: admin-naik-masuk 520ms cubic-bezier(0.22, 1, 0.36, 1) backwards;
+}
+
+.konten-admin > :nth-child(2) { animation-delay: 60ms; }
+.konten-admin > :nth-child(3) { animation-delay: 120ms; }
+.konten-admin > :nth-child(4) { animation-delay: 180ms; }
+.konten-admin > :nth-child(5) { animation-delay: 240ms; }
+.konten-admin > :nth-child(6) { animation-delay: 300ms; }
+.konten-admin > :nth-child(n + 7) { animation-delay: 340ms; }
+
+/* Kartu statistik terangkat lembut saat disorot */
+.kartu-angkat {
+    transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.35s ease;
+}
+
+.kartu-angkat:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 2px 4px rgba(20, 25, 22, 0.05), 0 18px 36px -16px rgba(20, 25, 22, 0.22);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .konten-admin > *,
+    .kartu-angkat {
+        animation: none !important;
+        transition: none !important;
+    }
+
+    ::view-transition-group(*),
+    ::view-transition-old(*),
+    ::view-transition-new(*) {
+        animation: none !important;
+    }
+}

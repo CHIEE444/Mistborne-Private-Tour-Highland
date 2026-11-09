@@ -1,0 +1,38 @@
+/* Subset Material Symbols Outlined: hanya ikon yang dipakai situs (±62 KB, bukan 4 MB). Tambah ikon baru →
+   jalankan ulang skrip subset (lihat docs). Sumbu variabel: FILL 0–1, wght 300–600. */
+@font-face {
+  font-family: "Material Symbols Outlined";
+  font-style: normal;
+  font-weight: 300 600;
+  font-display: block;
+  src: url("../fonts/material-symbols-outlined.woff2") format("woff2");
+}
+.material-symbols-outlined {
+  font-family: "Material Symbols Outlined";
+  font-weight: normal;
+  font-style: normal;
+  font-size: 24px;
+  line-height: 1;
+  letter-spacing: normal;
+  text-transform: none;
+  display: inline-block;
+  white-space: nowrap;
+  word-wrap: normal;
+  direction: ltr;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  font-feature-settings: "liga";
+}
+
+/* Kotak ikon dikunci 1em: selama font belum siap, nama ikon (mis. "notifications") tidak melebar
+   dan mengacak tata letak saat berpindah halaman. Di @layer base agar kelas ukuran Tailwind (w-14, h-14) tetap menang. */
+@layer base {
+  .material-symbols-outlined {
+    width: 1em;
+    height: 1em;
+    overflow: hidden;
+    flex-shrink: 0;
+  }
+}
+
